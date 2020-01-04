@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,8 +9,34 @@ enum AuthMode {
   Login,
 }
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
   static const routhName = '/auth';
+
+  @override
+  _AuthScreenState createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
+  FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
+
+  String t;
+
+  @override
+  void initState() {
+    super.initState();
+    firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) {
+        print('onMessage called: $message');
+      },
+      onResume: (Map<String, dynamic> message) {
+        print('onResume called: $message');
+      },
+      onLaunch: (Map<String, dynamic> message) {
+        print('onLaunch called: $message');
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
@@ -108,6 +135,12 @@ class _AuthCardState extends State<AuthCard>
   }
 
   Future<void> _submit() async {
+    String to;
+    FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
+    await firebaseMessaging.getToken().then((token) {
+      print('FCM Token: $token');
+      to = token;
+    });
     if (!_formKey.currentState.validate()) {
       return;
     }
@@ -117,11 +150,11 @@ class _AuthCardState extends State<AuthCard>
     });
     try {
       if (_authMode == AuthMode.Login) {
-        // Login
         await Provider.of<AuthProv>(context, listen: false).signIn(
           _authData['email'],
           _authData['password'],
         );
+        await Provider.of<AuthProv>(context, listen: false).fcmDevice(to);
       } else {
         await Provider.of<AuthProv>(context, listen: false).signUp(
           _authData['email'],

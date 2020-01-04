@@ -37,16 +37,33 @@ class AuthProv with ChangeNotifier {
     );
   }
 
-  Future<void> signIn(String email, String password) async {
+  Future<void> fcmDevice(String fcm) async {
     String deviceName;
-    String deviceVersion;
     String identifier;
     final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
     var build = await deviceInfoPlugin.androidInfo;
     deviceName = build.model;
-    deviceVersion = build.version.toString();
     identifier = build.androidId;
+    print(fcm);
 
+    final url = 'https://schoolbuddy.herokuapp.com/devices/';
+
+    await http.post(
+      url,
+      headers: {
+        'Authorization': 'token ' + _token,
+      },
+      body: {
+        "name": deviceName,
+        "registration_id": "",
+        "device_id": identifier,
+        "active": true,
+        "type": 'android'
+      },
+    );
+  }
+
+  Future<void> signIn(String email, String password) async {
     final url = 'https://schoolbuddy.herokuapp.com/api/user/token/';
 
     final response = await http.post(

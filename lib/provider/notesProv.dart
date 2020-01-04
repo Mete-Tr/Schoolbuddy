@@ -19,8 +19,8 @@ class NotesProv with ChangeNotifier {
     final response = await http.post(url, headers: {
       'Authorization': 'token ' + token['token'],
     }, body: {
-      'title': title,
-      'note_contend': text
+      'note_title': title,
+      'note_content': text
     });
     final resp = json.decode(response.body);
     final note = NotesCompanion(
