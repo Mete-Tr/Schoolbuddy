@@ -25,7 +25,7 @@ class NotesProv with ChangeNotifier {
     final resp = json.decode(response.body);
     final note = NotesCompanion(
       id: Value(resp['id']),
-      title: Value(resp['title']),
+      title: Value(resp['note_title']),
       noteText: Value(resp['note_content']),
     );
     dbNotes.insertNote(note);
