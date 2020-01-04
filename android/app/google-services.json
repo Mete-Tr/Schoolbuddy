@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "970012573192",
+    "firebase_url": "https://schoolbuddy-83833.firebaseio.com",
+    "project_id": "schoolbuddy-83833",
+    "storage_bucket": "schoolbuddy-83833.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970012573192:android:23030a94990b529ddc1bbd",
+        "android_client_info": {
+          "package_name": "com.example.x"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "970012573192-7mra9pceajjlhfn7s2ecvppuhnn717v1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvgEZjG195xvffk_shMzKrd7GQntaQJ3o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "970012573192-7mra9pceajjlhfn7s2ecvppuhnn717v1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
