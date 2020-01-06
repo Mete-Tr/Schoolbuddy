@@ -138,7 +138,6 @@ class _AuthCardState extends State<AuthCard>
     String to;
     FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
     await firebaseMessaging.getToken().then((token) {
-      print('FCM Token: $token');
       to = token;
     });
     if (!_formKey.currentState.validate()) {
@@ -154,7 +153,7 @@ class _AuthCardState extends State<AuthCard>
           _authData['email'],
           _authData['password'],
         );
-        await Provider.of<AuthProv>(context, listen: false).fcmDevice(to);
+        await Provider.of<AuthProv>(context, listen: false).addFcmDevice(to);
       } else {
         await Provider.of<AuthProv>(context, listen: false).signUp(
           _authData['email'],
@@ -201,7 +200,7 @@ class _AuthCardState extends State<AuthCard>
       child: AnimatedContainer(
         duration: Duration(milliseconds: 300),
         curve: Curves.easeIn,
-        height: _authMode == AuthMode.Signup ? 435 : 260, //change height
+        height: _authMode == AuthMode.Signup ? 435 : 260,
         constraints:
             BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 435 : 260),
         width: deviceSize.width * 0.8,

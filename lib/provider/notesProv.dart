@@ -11,7 +11,7 @@ import '../database/moor_database.dart';
 class NotesProv with ChangeNotifier {
   final url = 'https://schoolbuddy.herokuapp.com/api/sb/notes/';
 
-  Future<void> postNote(String text, String title, BuildContext context) async {
+  Future<bool> postNote(String text, String title, BuildContext context) async {
     final dbNotes = Provider.of<NoteDao>(context);
     final prefs = await SharedPreferences.getInstance();
     final tmp = prefs.getString('userData');
@@ -29,9 +29,14 @@ class NotesProv with ChangeNotifier {
       noteText: Value(resp['note_content']),
     );
     dbNotes.insertNote(note);
+    if (response == null) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
-  Future<void> deleteNote(Note note, int id, BuildContext context) async {
+  Future<bool> deleteNote(Note note, int id, BuildContext context) async {
     final url = 'http://schoolbuddy.herokuapp.com/api/sb/notes/$id/';
     final dbNotes = Provider.of<NoteDao>(context);
     final prefs = await SharedPreferences.getInstance();
@@ -44,6 +49,11 @@ class NotesProv with ChangeNotifier {
       },
     );
     dbNotes.deleteNote(note);
+    if (response == null) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   // Future<void> updateNote(Note note, int id, BuildContext context) async {

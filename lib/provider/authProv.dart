@@ -37,7 +37,7 @@ class AuthProv with ChangeNotifier {
     );
   }
 
-  Future<void> fcmDevice(String fcm) async {
+  Future<void> addFcmDevice(String fcm) async {
     String deviceName;
     String identifier;
     final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
