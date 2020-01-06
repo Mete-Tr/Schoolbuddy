@@ -11,19 +11,36 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  bool edit = false;
   @override
   Widget build(BuildContext context) {
     final divice = MediaQuery.of(context).size;
+    TextEditingController nameCon = TextEditingController();
+    TextEditingController emailCon = TextEditingController();
 
     return FutureBuilder(
         future: Provider.of<ProfileProv>(context).getUserData(),
         builder: (context, snapshot) {
+          final user = snapshot.data;
           if (snapshot?.hasData ?? false) {
             return Scaffold(
               backgroundColor: Theme.of(context).primaryColor,
               appBar: AppBar(
                 elevation: 0,
                 title: Text('Profile Screen'),
+                actions: <Widget>[
+                  Icon(Icons.edit),
+                  Switch(
+                    activeColor: Colors.white,
+                    value: edit,
+                    onChanged: (val) {
+                      setState(() {
+                        edit = val;
+                      });
+                    },
+                  )
+                ],
               ),
               drawer: AppDrawer(),
               body: SafeArea(
@@ -34,44 +51,78 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       elevation: 10,
                       child: Container(
                         padding: EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                CircleAvatar(
-                                  radius: 30,
-                                  child: IconButton(
-                                    icon: Icon(Icons.person),
-                                    iconSize: 35,
-                                    onPressed: () {},
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  CircleAvatar(
+                                    radius: 30,
+                                    child: IconButton(
+                                      icon: Icon(Icons.person),
+                                      iconSize: 35,
+                                      onPressed: () {},
+                                    ),
                                   ),
-                                ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    '\tClass: ${user['klasse']}',
+                                    style: TextStyle(fontSize: 20),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              if (!edit)
                                 Text(
-                                  '\tClass: ${snapshot.data['klasse']}',
-                                  style: TextStyle(fontSize: 20),
-                                )
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  'Name:\n${snapshot.data['lastname']},\t${snapshot.data['firstname']}',
+                                  'Name:\n${user['lastname']},\t${user['firstname']}',
                                   style: TextStyle(fontSize: 25),
                                 )
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              children: <Widget>[
+                              else
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                    labelText: 'New name',
+                                  ),
+                                  onSaved: (val) {
+                                    //TODO:
+                                  },
+                                ),
+                              const SizedBox(height: 10),
+                              if (!edit)
                                 Text(
-                                  'E-mail:\t${snapshot.data['email']}',
+                                  'E-mail:\t${user['email']}',
                                   style: TextStyle(fontSize: 20),
                                 )
-                              ],
-                            )
-                          ],
+                              else
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                    labelText: 'New email',
+                                  ),
+                                  onSaved: (val) {
+                                    //TODO:
+                                  },
+                                ),
+                              if (edit)
+                                Center(
+                                  child: RaisedButton(
+                                    child: Text('Save'),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    color: Theme.of(context).primaryColor,
+                                    textColor: Theme.of(context)
+                                        .primaryTextTheme
+                                        .button
+                                        .color,
+                                    onPressed: () {
+                                      //TODO:what happens after save
+                                    },
+                                  ),
+                                )
+                            ],
+                          ),
                         ),
                       ),
                     )

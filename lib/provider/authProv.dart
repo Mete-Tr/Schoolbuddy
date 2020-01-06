@@ -44,7 +44,6 @@ class AuthProv with ChangeNotifier {
     var build = await deviceInfoPlugin.androidInfo;
     deviceName = build.model;
     identifier = build.androidId;
-    print(fcm);
 
     final url = 'https://schoolbuddy.herokuapp.com/devices/';
 
