@@ -28,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               backgroundColor: Theme.of(context).primaryColor,
               appBar: AppBar(
                 elevation: 0,
-                title: Text('Profile Screen'),
+                title: Text('Profile'),
                 actions: <Widget>[
                   Icon(Icons.edit),
                   Switch(
