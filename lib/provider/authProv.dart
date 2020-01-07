@@ -21,7 +21,7 @@ class AuthProv with ChangeNotifier {
     return _token != null;
   }
 
-  Future<void> signUp(String email, String password, String vorname,
+  Future<bool> signUp(String email, String password, String vorname,
       String nachname, String klasse) async {
     final url = 'https://schoolbuddy.herokuapp.com/api/user/create/';
 
@@ -35,9 +35,13 @@ class AuthProv with ChangeNotifier {
         'klasse': klasse,
       },
     );
+    if (response == null)
+      return false;
+    else
+      return true;
   }
 
-  Future<void> addFcmDevice(String fcm) async {
+  Future<bool> addFcmDevice(String fcm) async {
     String deviceName;
     String identifier;
     final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
@@ -60,9 +64,10 @@ class AuthProv with ChangeNotifier {
         "type": 'android'
       },
     );
+    return true;
   }
 
-  Future<void> signIn(String email, String password) async {
+  Future<bool> signIn(String email, String password) async {
     final url = 'https://schoolbuddy.herokuapp.com/api/user/token/';
 
     final response = await http.post(
@@ -97,9 +102,13 @@ class AuthProv with ChangeNotifier {
       'expiryDate': _expiryDate.toIso8601String(),
     });
     prefs.setString('userData', userData);
+    if (response == null)
+      return false;
+    else
+      return true;
   }
 
-  Future<void> logout() async {
+  Future<bool> logout() async {
     _token = null;
     _id = null;
     _lastname = null;
@@ -114,6 +123,10 @@ class AuthProv with ChangeNotifier {
       _authTimer = null;
     }
     notifyListeners();
+    if (_token != null)
+      return false;
+    else
+      return true;
   }
 
   Future<bool> tryAutoLogin() async {
@@ -148,9 +161,5 @@ class AuthProv with ChangeNotifier {
     }
     final timeToExpiry = _expiryDate.difference(DateTime.now()).inSeconds;
     _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
-  }
-
-  int get getId {
-    return _id;
   }
 }

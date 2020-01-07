@@ -177,6 +177,7 @@ class _AuthCardState extends State<AuthCard>
 
   void _switchAuthMode() {
     if (_authMode == AuthMode.Login) {
+      // here the get classes
       setState(() {
         _authMode = AuthMode.Signup;
       });
