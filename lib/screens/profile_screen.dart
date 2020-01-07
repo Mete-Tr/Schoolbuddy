@@ -90,20 +90,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   },
                                 ),
                               const SizedBox(height: 10),
-                              if (!edit)
-                                Text(
-                                  'E-mail:\t${user['email']}',
-                                  style: TextStyle(fontSize: 20),
-                                )
-                              else
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    labelText: 'New email',
-                                  ),
-                                  onSaved: (val) {
-                                    //TODO:
-                                  },
-                                ),
+                              Text(
+                                'E-mail:\t${user['email']}',
+                                style: TextStyle(fontSize: 20),
+                              ),
                               if (edit)
                                 Center(
                                   child: RaisedButton(
@@ -124,6 +114,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ],
                           ),
                         ),
+                      ),
+                    ),
+                    SizedBox(height: 50),
+                    Container(
+                      width: 250,
+                      child: RaisedButton(
+                        color: Colors.white,
+                        textColor: Theme.of(context).primaryColor,
+                        child: Text('Change Email'),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                    Container(
+                      width: 250,
+                      child: RaisedButton(
+                        color: Colors.white,
+                        textColor: Theme.of(context).primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Text('Change Password'),
+                        onPressed: () {},
                       ),
                     )
                   ],
