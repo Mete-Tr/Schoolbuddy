@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:x/provider/profileProv.dart';
+import 'package:x/screens/change_email.dart';
 import 'package:x/screens/change_password.dart';
 
 import '../widgets/app_drawer.dart';
@@ -125,7 +126,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(ChangeEmail.routhName);
+                        },
                       ),
                     ),
                     Container(

@@ -32,6 +32,17 @@ class AuthProv with ChangeNotifier {
     return true;
   }
 
+  Future<bool> changeEmail(String email) async {
+    final url = 'https://schoolbuddy.herokuapp.com/api/user/me/';
+
+    final response = http.patch(url, headers: {
+      'Authorization': 'token ' + _token,
+    }, body: {
+      'email': email
+    });
+    return true;
+  }
+
   Future<bool> signUp(String email, String password, String vorname,
       String nachname, String klasse) async {
     final url = 'https://schoolbuddy.herokuapp.com/api/user/create/';

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:x/database/moor_database.dart';
 import 'package:x/provider/profileProv.dart';
+import 'package:x/screens/change_email.dart';
 import 'package:x/screens/change_password.dart';
 import 'package:x/screens/new_note_screen.dart';
 import 'package:x/screens/profile_screen.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
             TimetableScreen.routhName: (ctx) => TimetableScreen(),
             ProfileScreen.routhName: (ctx) => ProfileScreen(),
             ChangePassword.routhName: (ctx) => ChangePassword(),
+            ChangeEmail.routhName: (ctx) => ChangeEmail(),
           },
         ),
       ),
