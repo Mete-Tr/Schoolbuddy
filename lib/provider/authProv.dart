@@ -22,25 +22,27 @@ class AuthProv with ChangeNotifier {
   }
 
   Future<bool> changePwd(String oldPwd, String newPwd) async {
-    //TODO: use oldPwd for veryfocation
-    final url = 'https://schoolbuddy.herokuapp.com/api/user/me/';
+    //TODO: if satuscode != 200
+    final url = 'http://schoolbuddy.herokuapp.com/api/user/password_update/';
 
     final response = http.patch(url, headers: {
       'Authorization': 'token ' + _token,
     }, body: {
-      'password': newPwd
+      'old_password': oldPwd,
+      'new_password': newPwd
     });
     logout();
     return true;
   }
 
   Future<bool> changeEmail(String pwd, String email) async {
-    //TODO: use oldPwd for veryfocation
-    final url = 'https://schoolbuddy.herokuapp.com/api/user/me/';
+    //TODO: if satuscode != 200
+    final url = 'http://schoolbuddy.herokuapp.com/api/user/update_email/';
 
     final response = http.patch(url, headers: {
       'Authorization': 'token ' + _token,
     }, body: {
+      'password': pwd,
       'email': email
     });
     logout();

@@ -259,7 +259,7 @@ class _AuthCardState extends State<AuthCard>
                     child: Text('Forgot password'),
                     onPressed: () {
                       openUrl(
-                          'https://schoolbuddy.herokuapp.com/password_reset/');
+                          'https://schoolbuddy.herokuapp.com/password-reset/');
                     },
                   ),
                 AnimatedContainer(
