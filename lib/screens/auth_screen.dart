@@ -136,6 +136,7 @@ class _AuthCardState extends State<AuthCard>
 
   Future<void> _submit() async {
     String to;
+    final auth = Provider.of<AuthProv>(context, listen: false);
     FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
     await firebaseMessaging.getToken().then((token) {
       to = token;
@@ -149,13 +150,13 @@ class _AuthCardState extends State<AuthCard>
     });
     try {
       if (_authMode == AuthMode.Login) {
-        await Provider.of<AuthProv>(context, listen: false).signIn(
+        await auth.signIn(
           _authData['email'],
           _authData['password'],
         );
-        await Provider.of<AuthProv>(context, listen: false).addFcmDevice(to);
+        await auth.addFcmDevice(to);
       } else {
-        await Provider.of<AuthProv>(context, listen: false).signUp(
+        await auth.signUp(
           _authData['email'],
           _authData['password'],
           _authData['firstname'],
@@ -176,8 +177,8 @@ class _AuthCardState extends State<AuthCard>
   }
 
   void _switchAuthMode() {
+    //TODO: put getclasses somewhere
     if (_authMode == AuthMode.Login) {
-      // here the get classes
       setState(() {
         _authMode = AuthMode.Signup;
       });

@@ -21,6 +21,17 @@ class AuthProv with ChangeNotifier {
     return _token != null;
   }
 
+  Future<bool> changePwd(String pwd) async {
+    final url = 'https://schoolbuddy.herokuapp.com/api/user/me/';
+
+    final response = http.patch(url, headers: {
+      'Authorization': 'token ' + _token,
+    }, body: {
+      'password': pwd
+    });
+    return true;
+  }
+
   Future<bool> signUp(String email, String password, String vorname,
       String nachname, String klasse) async {
     final url = 'https://schoolbuddy.herokuapp.com/api/user/create/';
@@ -41,10 +52,18 @@ class AuthProv with ChangeNotifier {
       return true;
   }
 
-  Future<bool> addFcmDevice(String fcm) async {
+  Future<bool> getClassList() async {
+    final url = 'https://schoolbuddy.herokuapp.com/api/sb/klasse/';
+
+    final response = await http.get(url);
+    //TODO: save teh classes
+    final tmp = json.decode(response.body);
+  }
+
+  Future<bool> addFcmDevice(String fcmToken) async {
     String deviceName;
     String identifier;
-    final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
+    final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     var build = await deviceInfoPlugin.androidInfo;
     deviceName = build.model;
     identifier = build.androidId;
@@ -58,7 +77,7 @@ class AuthProv with ChangeNotifier {
       },
       body: {
         "name": deviceName,
-        "registration_id": "",
+        "registration_id": fcmToken,
         "device_id": identifier,
         "active": true,
         "type": 'android'

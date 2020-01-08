@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:x/provider/profileProv.dart';
+import 'package:x/screens/change_password.dart';
 
 import '../widgets/app_drawer.dart';
 
@@ -136,7 +137,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: Text('Change Password'),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(ChangePassword.routhName);
+                        },
                       ),
                     )
                   ],
