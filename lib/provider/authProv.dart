@@ -21,18 +21,21 @@ class AuthProv with ChangeNotifier {
     return _token != null;
   }
 
-  Future<bool> changePwd(String pwd) async {
+  Future<bool> changePwd(String oldPwd, String newPwd) async {
+    //TODO: use oldPwd for veryfocation
     final url = 'https://schoolbuddy.herokuapp.com/api/user/me/';
 
     final response = http.patch(url, headers: {
       'Authorization': 'token ' + _token,
     }, body: {
-      'password': pwd
+      'password': newPwd
     });
+    logout();
     return true;
   }
 
-  Future<bool> changeEmail(String email) async {
+  Future<bool> changeEmail(String pwd, String email) async {
+    //TODO: use oldPwd for veryfocation
     final url = 'https://schoolbuddy.herokuapp.com/api/user/me/';
 
     final response = http.patch(url, headers: {
@@ -40,6 +43,7 @@ class AuthProv with ChangeNotifier {
     }, body: {
       'email': email
     });
+    logout();
     return true;
   }
 
@@ -67,7 +71,7 @@ class AuthProv with ChangeNotifier {
     final url = 'https://schoolbuddy.herokuapp.com/api/sb/klasse/';
 
     final response = await http.get(url);
-    //TODO: save teh classes
+    //TODO: save the classes
     final tmp = json.decode(response.body);
   }
 
