@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../provider/authProv.dart';
 
@@ -191,6 +192,14 @@ class _AuthCardState extends State<AuthCard>
     }
   }
 
+  Future openUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print('can not launch $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
@@ -237,6 +246,22 @@ class _AuthCardState extends State<AuthCard>
                     _authData['password'] = value;
                   },
                 ),
+                const SizedBox(height: 10),
+                if (_authMode == AuthMode.Login)
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+                    color: Theme.of(context).primaryColor,
+                    textColor: Theme.of(context).primaryTextTheme.button.color,
+                    child: Text('Forgot password'),
+                    onPressed: () {
+                      openUrl(
+                          'https://schoolbuddy.herokuapp.com/password_reset/');
+                    },
+                  ),
                 AnimatedContainer(
                   constraints: BoxConstraints(
                     minHeight: _authMode == AuthMode.Signup ? 150 : 0,
@@ -285,9 +310,6 @@ class _AuthCardState extends State<AuthCard>
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
                 ),
                 if (_isLoading)
                   CircularProgressIndicator()
