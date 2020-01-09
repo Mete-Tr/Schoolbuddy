@@ -247,21 +247,6 @@ class _AuthCardState extends State<AuthCard>
                   },
                 ),
                 const SizedBox(height: 10),
-                if (_authMode == AuthMode.Login)
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                    color: Theme.of(context).primaryColor,
-                    textColor: Theme.of(context).primaryTextTheme.button.color,
-                    child: Text('Forgot password'),
-                    onPressed: () {
-                      openUrl(
-                          'https://schoolbuddy.herokuapp.com/password-reset/');
-                    },
-                  ),
                 AnimatedContainer(
                   constraints: BoxConstraints(
                     minHeight: _authMode == AuthMode.Signup ? 150 : 0,
@@ -325,6 +310,21 @@ class _AuthCardState extends State<AuthCard>
                         EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
                     color: Theme.of(context).primaryColor,
                     textColor: Theme.of(context).primaryTextTheme.button.color,
+                  ),
+                if (_authMode == AuthMode.Login)
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+                    color: Theme.of(context).primaryColor,
+                    textColor: Theme.of(context).primaryTextTheme.button.color,
+                    child: Text('Forgot password'),
+                    onPressed: () {
+                      openUrl(
+                          'https://schoolbuddy.herokuapp.com/password-reset/');
+                    },
                   ),
                 FlatButton(
                   child: Text(

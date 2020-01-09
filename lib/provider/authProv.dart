@@ -70,10 +70,10 @@ class AuthProv with ChangeNotifier {
   }
 
   Future<bool> getClassList() async {
+    //TODO: use in setup screen
     final url = 'https://schoolbuddy.herokuapp.com/api/sb/klasse/';
 
     final response = await http.get(url);
-    //TODO: save the classes
     final tmp = json.decode(response.body);
   }
 
