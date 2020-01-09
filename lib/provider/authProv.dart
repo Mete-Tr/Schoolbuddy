@@ -78,6 +78,7 @@ class AuthProv with ChangeNotifier {
   }
 
   Future<bool> addFcmDevice(String fcmToken) async {
+    //TODO: not working
     String deviceName;
     String identifier;
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
@@ -85,19 +86,20 @@ class AuthProv with ChangeNotifier {
     deviceName = build.model;
     identifier = build.androidId;
 
-    final url = 'https://schoolbuddy.herokuapp.com/devices/';
+    final url = 'https://schoolbuddy.herokuapp.com/api/sb/device/';
 
-    await http.post(
+    final response = await http.post(
       url,
       headers: {
         'Authorization': 'token ' + _token,
       },
       body: {
-        "name": deviceName,
-        "registration_id": fcmToken,
-        "device_id": identifier,
-        "active": true,
-        "type": 'android'
+        'name': deviceName,
+        'active': 'true',
+        'device_id': identifier,
+        'registration_id': fcmToken,
+        'type': 'android',
+        'user': '$_id'
       },
     );
     return true;

@@ -45,7 +45,7 @@ class _AuthScreenState extends State<AuthScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text('Auth Screen'),
+        title: const Text('Schoolbuddy'),
       ),
       body: SafeArea(
         child: Stack(
