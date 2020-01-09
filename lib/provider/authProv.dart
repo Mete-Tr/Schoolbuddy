@@ -78,7 +78,6 @@ class AuthProv with ChangeNotifier {
   }
 
   Future<bool> addFcmDevice(String fcmToken) async {
-    //TODO: not working
     String deviceName;
     String identifier;
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
