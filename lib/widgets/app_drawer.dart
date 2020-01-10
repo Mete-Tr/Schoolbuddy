@@ -7,7 +7,7 @@ import 'package:x/screens/welcome_screen.dart';
 
 import '../provider/authProv.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends StatelessWidget with ChangeNotifier {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -65,6 +65,7 @@ class AppDrawer extends StatelessWidget {
             title: Text('Ausloggen'),
             onTap: () {
               Provider.of<AuthProv>(context).logout();
+              notifyListeners();
             },
           ),
         ],
