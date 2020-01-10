@@ -26,6 +26,17 @@ class AuthProv with ChangeNotifier {
   }
 
   bool get isSeen {
+    return _seen;
+  }
+
+  Future<bool> setClass(String klasse) async {
+    final url = 'https://schoolbuddy.herokuapp.com/api/user/me/';
+
+    final respone = await http.patch(url, headers: {
+      'Authorization': 'token ' + _token,
+    }, body: {
+      'klasse': klasse,
+    });
     return true;
   }
 
@@ -33,16 +44,12 @@ class AuthProv with ChangeNotifier {
     //TODO: if satuscode != 200
     final url = 'https://schoolbuddy.herokuapp.com/api/user/password_update/';
 
-    final response = await http.put(
-      url,
-      headers: {
-        'Authorization': 'token ' + _token,
-      },
-      body: {
-        'old_password': oldPwd,
-        'new_password': newPwd,
-      },
-    );
+    final response = await http.put(url, headers: {
+      'Authorization': 'token ' + _token,
+    }, body: {
+      'old_password': oldPwd,
+      'new_password': newPwd,
+    });
     logout();
     return true;
   }
@@ -65,34 +72,26 @@ class AuthProv with ChangeNotifier {
     final url = 'https://schoolbuddy.herokuapp.com/api/user/me/';
     List<String> name = fullName.split(' ');
 
-    final response = await http.patch(
-      url,
-      headers: {
-        'Authorization': 'token ' + _token,
-      },
-      body: {
-        'firstname': name[0],
-        'lastname': name[1],
-      },
-    );
+    final response = await http.patch(url, headers: {
+      'Authorization': 'token ' + _token,
+    }, body: {
+      'firstname': name[0],
+      'lastname': name[1],
+    });
     logout();
     return true;
   }
 
-  Future<bool> signUp(String email, String password, String vorname,
-      String nachname, String klasse) async {
+  Future<bool> signUp(
+      String email, String password, String vorname, String nachname) async {
     final url = 'https://schoolbuddy.herokuapp.com/api/user/create/';
 
-    final response = await http.post(
-      url,
-      body: {
-        'email': email,
-        'firstname': vorname,
-        'lastname': nachname,
-        'password': password,
-        'klasse': klasse,
-      },
-    );
+    final response = await http.post(url, body: {
+      'email': email,
+      'firstname': vorname,
+      'lastname': nachname,
+      'password': password,
+    });
     if (response == null)
       return false;
     else
@@ -113,17 +112,14 @@ class AuthProv with ChangeNotifier {
   }
 
   Future<List> getCourses(String klasse) async {
-    //TODO: working?
-    final url = '';
+    final url = 'https://schoolbuddy.herokuapp.com/api/sb/course/';
 
-    final response = await http.post(
-      url,
-      headers: {
-        'Authorization': 'token ' + _token,
-      },
-      body: {'klasse': klasse},
-    );
+    final response = await http.get(url, headers: {
+      'Authorization': 'token ' + _token,
+    });
     final tmp = json.decode(response.body);
+    final tmp2 = tmp['results'];
+    return tmp2;
   }
 
   Future<bool> addFcmDevice(String fcmToken) async {
@@ -136,33 +132,26 @@ class AuthProv with ChangeNotifier {
 
     final url = 'https://schoolbuddy.herokuapp.com/api/sb/device/';
 
-    final response = await http.post(
-      url,
-      headers: {
-        'Authorization': 'token ' + _token,
-      },
-      body: {
-        'name': deviceName,
-        'active': 'true',
-        'device_id': identifier,
-        'registration_id': fcmToken,
-        'type': 'android',
-        'user': '$_id'
-      },
-    );
+    final response = await http.post(url, headers: {
+      'Authorization': 'token ' + _token,
+    }, body: {
+      'name': deviceName,
+      'active': 'true',
+      'device_id': identifier,
+      'registration_id': fcmToken,
+      'type': 'android',
+      'user': '$_id'
+    });
     return true;
   }
 
   Future<bool> signIn(String email, String password) async {
     final url = 'https://schoolbuddy.herokuapp.com/api/user/token/';
 
-    final response = await http.post(
-      url,
-      body: {
-        'email': email,
-        'password': password,
-      },
-    );
+    final response = await http.post(url, body: {
+      'email': email,
+      'password': password,
+    });
 
     final signinData = (json.decode(response.body)) as Map<String, dynamic>;
     _token = signinData['token'];
@@ -171,7 +160,7 @@ class AuthProv with ChangeNotifier {
     _lastname = signinData['lastname'];
     _email = signinData['email'];
     _klasse = signinData['klasse'];
-    _seen = signinData['_seen'];
+    _seen = signinData['seen'];
     _expiryDate = DateTime.now().add(
       Duration(hours: 2),
     );

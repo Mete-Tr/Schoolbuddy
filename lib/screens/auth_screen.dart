@@ -106,7 +106,6 @@ class _AuthCardState extends State<AuthCard>
     'password': '',
     'firstname': '',
     'lastname': '',
-    'klasse': ''
   };
 
   @override
@@ -163,7 +162,6 @@ class _AuthCardState extends State<AuthCard>
           _authData['password'],
           _authData['firstname'],
           _authData['lastname'],
-          _authData['klasse'],
         );
       }
       setState(() {
@@ -250,8 +248,8 @@ class _AuthCardState extends State<AuthCard>
                 const SizedBox(height: 10),
                 AnimatedContainer(
                   constraints: BoxConstraints(
-                    minHeight: _authMode == AuthMode.Signup ? 150 : 0,
-                    maxHeight: _authMode == AuthMode.Signup ? 237 : 0,
+                    minHeight: _authMode == AuthMode.Signup ? 113 : 0,
+                    maxHeight: _authMode == AuthMode.Signup ? 200 : 0,
                   ),
                   duration: Duration(milliseconds: 300),
                   curve: Curves.easeIn,
@@ -284,12 +282,6 @@ class _AuthCardState extends State<AuthCard>
                             decoration: InputDecoration(labelText: 'Lastname'),
                             onSaved: (value) {
                               _authData['lastname'] = value;
-                            },
-                          ),
-                          TextFormField(
-                            decoration: InputDecoration(labelText: 'Class'),
-                            onSaved: (value) {
-                              _authData['klasse'] = value;
                             },
                           ),
                         ],

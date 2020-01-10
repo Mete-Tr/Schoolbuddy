@@ -60,6 +60,8 @@ class _SetupScreenState extends State<SetupScreen> {
                             setState(() {
                               currentitem = newValueSelected;
                             });
+                            Provider.of<AuthProv>(context)
+                                .setClass(currentitem);
                           },
                         ),
                       );
@@ -70,6 +72,20 @@ class _SetupScreenState extends State<SetupScreen> {
                     }
                   },
                 ),
+                if (currentitem != null)
+                  FutureBuilder(
+                    future:
+                        Provider.of<AuthProv>(context).getCourses(currentitem),
+                    builder: (context, snapshot) {
+                      if (snapshot?.hasData ?? false) {
+                        return Container(
+                          //TODO: richtig anzeigen
+                          child: Text('yeeees'),
+                        );
+                      } else
+                        return Container();
+                    },
+                  )
               ],
             ),
           ),
