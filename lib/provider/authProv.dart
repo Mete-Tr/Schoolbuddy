@@ -26,33 +26,55 @@ class AuthProv with ChangeNotifier {
   }
 
   bool get isSeen {
-    return _seen;
+    return true;
   }
 
   Future<bool> changePwd(String oldPwd, String newPwd) async {
     //TODO: if satuscode != 200
-    final url = 'http://schoolbuddy.herokuapp.com/api/user/password_update/';
+    final url = 'https://schoolbuddy.herokuapp.com/api/user/password_update/';
 
-    final response = http.patch(url, headers: {
-      'Authorization': 'token ' + _token,
-    }, body: {
-      'old_password': oldPwd,
-      'new_password': newPwd
-    });
+    final response = await http.put(
+      url,
+      headers: {
+        'Authorization': 'token ' + _token,
+      },
+      body: {
+        'old_password': oldPwd,
+        'new_password': newPwd,
+      },
+    );
     logout();
     return true;
   }
 
   Future<bool> changeEmail(String pwd, String email) async {
     //TODO: if satuscode != 200
-    final url = 'http://schoolbuddy.herokuapp.com/api/user/update_email/';
+    final url = 'https://schoolbuddy.herokuapp.com/api/user/update_email/';
 
-    final response = http.patch(url, headers: {
+    final response = await http.put(url, headers: {
       'Authorization': 'token ' + _token,
     }, body: {
       'password': pwd,
       'email': email
     });
+    logout();
+    return true;
+  }
+
+  Future<bool> changeName(String fullName) async {
+    final url = 'https://schoolbuddy.herokuapp.com/api/user/me/';
+    List<String> name = fullName.split(' ');
+
+    final response = await http.patch(
+      url,
+      headers: {
+        'Authorization': 'token ' + _token,
+      },
+      body: {
+        'firstname': name[0],
+        'lastname': name[1],
+      },
+    );
     logout();
     return true;
   }
@@ -88,6 +110,20 @@ class AuthProv with ChangeNotifier {
       list[i] = tmp2[i]['klasse_name'];
     }
     return list;
+  }
+
+  Future<List> getCourses(String klasse) async {
+    //TODO: working?
+    final url = '';
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Authorization': 'token ' + _token,
+      },
+      body: {'klasse': klasse},
+    );
+    final tmp = json.decode(response.body);
   }
 
   Future<bool> addFcmDevice(String fcmToken) async {

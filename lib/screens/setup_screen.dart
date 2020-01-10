@@ -70,6 +70,7 @@ class _SetupScreenState extends State<SetupScreen> {
                     }
                   },
                 ),
+                FutureBuilder()
               ],
             ),
           ),

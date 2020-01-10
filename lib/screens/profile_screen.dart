@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:x/provider/authProv.dart';
 import 'package:x/provider/profileProv.dart';
 import 'package:x/screens/change_email.dart';
 import 'package:x/screens/change_password.dart';
@@ -15,6 +16,17 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   bool edit = false;
+  String fullName = '';
+
+  void _submit() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    Provider.of<AuthProv>(context, listen: false).changeName(fullName);
+    edit = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final divice = MediaQuery.of(context).size;
@@ -77,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               const SizedBox(height: 10),
                               if (!edit)
                                 Text(
-                                  'Name:\n${user['lastname']},\t${user['firstname']}',
+                                  'Name:\n${user['firstname']}\t${user['lastname']}',
                                   style: TextStyle(fontSize: 25),
                                 )
                               else
@@ -86,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     labelText: 'Neuer Name',
                                   ),
                                   onSaved: (val) {
-                                    //TODO: Save new Name
+                                    fullName = val;
                                   },
                                 ),
                               const SizedBox(height: 10),
@@ -106,9 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         .primaryTextTheme
                                         .button
                                         .color,
-                                    onPressed: () {
-                                      //TODO:what happens after save
-                                    },
+                                    onPressed: _submit,
                                   ),
                                 )
                             ],
