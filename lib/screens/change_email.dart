@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:x/provider/authProv.dart';
 
 class ChangeEmail extends StatelessWidget {
@@ -11,12 +12,14 @@ class ChangeEmail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<bool> _submit() async {
+      final prefs = await SharedPreferences.getInstance();
       if (!_formKey.currentState.validate()) {
         return false;
       }
       _formKey.currentState.save();
       try {
         Provider.of<AuthProv>(context, listen: false).changeEmail(pwd, email);
+        prefs.setString('email', email);
         Navigator.of(context).pop();
         return true;
       } catch (error) {}

@@ -18,13 +18,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool edit = false;
   String fullName = '';
 
-  void _submit() {
+  void _submit() async {
+    //TODO: Doku -> der name wurde zu spät geänert. Lösung: async und await
     if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
-    Provider.of<AuthProv>(context, listen: false).changeName(fullName);
-    edit = false;
+    await Provider.of<AuthProv>(context, listen: false).changeName(fullName);
+    setState(() {
+      edit = false;
+    });
   }
 
   @override
@@ -33,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         future: Provider.of<ProfileProv>(context).getUserData(),
         builder: (context, snapshot) {
           if (snapshot?.hasData ?? false) {
-            final user = snapshot.data;
+            // final user = snapshot.data;
             return Scaffold(
               backgroundColor: Theme.of(context).primaryColor,
               appBar: AppBar(
@@ -79,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   SizedBox(width: 10),
                                   Text(
-                                    '\tKlasse: ${user['klasse']}',
+                                    '\tKlasse: ${snapshot.data.getString('klasse')}',
                                     style: TextStyle(fontSize: 20),
                                   )
                                 ],
@@ -87,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               const SizedBox(height: 10),
                               if (!edit)
                                 Text(
-                                  'Name:\n${user['firstname']}\t${user['lastname']}',
+                                  'Name:\n${snapshot.data.getString('firstname')}\t${snapshot.data.getString('lastname')}',
                                   style: TextStyle(fontSize: 25),
                                 )
                               else
@@ -101,7 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               const SizedBox(height: 10),
                               Text(
-                                'E-mail:\t${user['email']}',
+                                'E-mail:\t${snapshot.data.getString('email')}',
                                 style: TextStyle(fontSize: 20),
                               ),
                               if (edit)

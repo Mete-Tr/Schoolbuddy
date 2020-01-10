@@ -26,7 +26,7 @@ class AuthProv with ChangeNotifier {
   }
 
   bool get isSeen {
-    return _seen;
+    return true;
   }
 
   Future<bool> setClass(String klasse) async {
@@ -50,7 +50,7 @@ class AuthProv with ChangeNotifier {
       'old_password': oldPwd,
       'new_password': newPwd,
     });
-    logout();
+    // logout();
     return true;
   }
 
@@ -64,12 +64,13 @@ class AuthProv with ChangeNotifier {
       'password': pwd,
       'email': email
     });
-    logout();
+    // logout();
     return true;
   }
 
   Future<bool> changeName(String fullName) async {
     final url = 'https://schoolbuddy.herokuapp.com/api/user/me/';
+    final prefs = await SharedPreferences.getInstance();
     List<String> name = fullName.split(' ');
 
     final response = await http.patch(url, headers: {
@@ -78,7 +79,9 @@ class AuthProv with ChangeNotifier {
       'firstname': name[0],
       'lastname': name[1],
     });
-    logout();
+    prefs.setString('firstname', name[0]);
+    prefs.setString('lastname', name[1]);
+    // logout();
     return true;
   }
 
@@ -168,17 +171,24 @@ class AuthProv with ChangeNotifier {
     _autoLogout();
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
-    final userData = json.encode({
-      'token': _token,
-      'id': _id,
-      'firstname': _firstname,
-      'lastname': _lastname,
-      'email': _email,
-      'klasse': _klasse,
-      'expiryDate': _expiryDate.toIso8601String(),
-    });
-    prefs.setString('userData', userData);
+    prefs.setString('token', _token);
+    prefs.setInt('id', _id);
+    prefs.setString('firstname', _firstname);
+    prefs.setString('lastname', _lastname);
+    prefs.setString('email', _email);
+    prefs.setString('klasse', _klasse);
+    prefs.setString('expiryDate', _expiryDate.toIso8601String());
     prefs.setBool('seen', _seen);
+    // final userData = json.encode({
+    //   'token': _token,
+    //   'id': _id,
+    //   'firstname': _firstname,
+    //   'lastname': _lastname,
+    //   'email': _email,
+    //   'klasse': _klasse,
+    //   'expiryDate': _expiryDate.toIso8601String(),
+    // });
+    // prefs.setString('userData', userData);
     if (response == null)
       return false;
     else
@@ -207,26 +217,26 @@ class AuthProv with ChangeNotifier {
   }
 
   Future<bool> tryAutoLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey('userData')) {
+    final p = await SharedPreferences.getInstance();
+    if (!p.containsKey('token')) {
       return false;
     }
 
-    final extractedUser =
-        json.decode(prefs.getString('userData')) as Map<String, dynamic>;
-    final expiryDate = DateTime.parse(extractedUser['expiryDate']);
+    // final extractedUser =
+    //     json.decode(prefs.getString('userData')) as Map<String, dynamic>;
+    final expiryDate = DateTime.parse(p.getString('expiryDate'));
 
     if (expiryDate.isBefore(DateTime.now())) {
       return false;
     }
 
-    _token = extractedUser['token'];
+    _token = p.getString('token');
     _expiryDate = expiryDate;
-    _email = extractedUser['email'];
-    _firstname = extractedUser['firstname'];
-    _lastname = extractedUser['lastname'];
-    _id = extractedUser['id'];
-    _klasse = extractedUser['klasse'];
+    _email = p.getString('email');
+    _firstname = p.getString('firstname');
+    _lastname = p.getString('lastname');
+    _id = p.getInt('id');
+    _klasse = p.getString('klasse');
     notifyListeners();
     _autoLogout();
     return true;
