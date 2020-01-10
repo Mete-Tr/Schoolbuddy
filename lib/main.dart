@@ -6,6 +6,7 @@ import 'package:x/screens/change_email.dart';
 import 'package:x/screens/change_password.dart';
 import 'package:x/screens/new_note_screen.dart';
 import 'package:x/screens/profile_screen.dart';
+import 'package:x/screens/setup_screen.dart';
 import 'package:x/screens/timetable_screen.dart';
 
 import './provider/authProv.dart';
@@ -19,7 +20,6 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-  bool _seen = false;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           home: auth.isAuth
-              ? WelcomeScreen()
+              ? auth.isSeen ? WelcomeScreen() : SetupScreen()
               : FutureBuilder(
                   future: auth.tryAutoLogin(),
                   builder: (ctx, authResultSnapshot) =>
@@ -61,6 +61,7 @@ class MyApp extends StatelessWidget {
             ProfileScreen.routhName: (ctx) => ProfileScreen(),
             ChangePassword.routhName: (ctx) => ChangePassword(),
             ChangeEmail.routhName: (ctx) => ChangeEmail(),
+            SetupScreen.routhName: (ctx) => SetupScreen(),
           },
         ),
       ),

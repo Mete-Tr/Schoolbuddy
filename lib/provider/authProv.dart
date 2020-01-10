@@ -15,10 +15,18 @@ String _klasse;
 int _id;
 DateTime _expiryDate;
 Timer _authTimer;
+bool _seen = false;
 
 class AuthProv with ChangeNotifier {
   bool get isAuth {
-    return _token != null;
+    if (_token != null)
+      return true;
+    else
+      return false;
+  }
+
+  bool get isSeen {
+    return _seen;
   }
 
   Future<bool> changePwd(String oldPwd, String newPwd) async {
@@ -69,12 +77,17 @@ class AuthProv with ChangeNotifier {
       return true;
   }
 
-  Future<bool> getClassList() async {
-    //TODO: use in setup screen
+  Future<List> getClasses() async {
     final url = 'https://schoolbuddy.herokuapp.com/api/sb/klasse/';
 
     final response = await http.get(url);
     final tmp = json.decode(response.body);
+    List tmp2 = tmp['results'];
+    List<String> list = List<String>(tmp2.length);
+    for (int i = 0; i < tmp2.length; i++) {
+      list[i] = tmp2[i]['klasse_name'];
+    }
+    return list;
   }
 
   Future<bool> addFcmDevice(String fcmToken) async {
@@ -122,6 +135,7 @@ class AuthProv with ChangeNotifier {
     _lastname = signinData['lastname'];
     _email = signinData['email'];
     _klasse = signinData['klasse'];
+    _seen = signinData['_seen'];
     _expiryDate = DateTime.now().add(
       Duration(hours: 2),
     );
@@ -139,6 +153,7 @@ class AuthProv with ChangeNotifier {
       'expiryDate': _expiryDate.toIso8601String(),
     });
     prefs.setString('userData', userData);
+    prefs.setBool('seen', _seen);
     if (response == null)
       return false;
     else

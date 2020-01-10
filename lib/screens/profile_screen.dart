@@ -22,8 +22,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return FutureBuilder(
         future: Provider.of<ProfileProv>(context).getUserData(),
         builder: (context, snapshot) {
-          final user = snapshot.data;
           if (snapshot?.hasData ?? false) {
+            final user = snapshot.data;
             return Scaffold(
               backgroundColor: Theme.of(context).primaryColor,
               appBar: AppBar(
