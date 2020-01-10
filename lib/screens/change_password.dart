@@ -26,7 +26,7 @@ class ChangePassword extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        title: Text('Change password'),
+        title: Text('Passwort ändern'),
       ),
       body: SafeArea(
         minimum: EdgeInsets.only(left: 5, right: 5),
@@ -43,11 +43,11 @@ class ChangePassword extends StatelessWidget {
                       TextFormField(
                         obscureText: true,
                         decoration: InputDecoration(
-                          labelText: 'Old password',
+                          labelText: 'Altes Password',
                         ),
                         validator: (value) {
                           if (value.isEmpty || value.length < 5) {
-                            return 'Password is too short!';
+                            return 'Password ist zu kurz, pwd > 4!';
                           }
                         },
                         onSaved: (val) {
@@ -58,21 +58,21 @@ class ChangePassword extends StatelessWidget {
                         controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
-                          labelText: 'New password',
+                          labelText: 'Neues Password',
                         ),
                         validator: (value) {
                           if (value.isEmpty || value.length < 5) {
-                            return 'Password is too short!';
+                            return 'Passwort ist zu kurz, pwd > 4!';
                           }
                         },
                       ),
                       TextFormField(
                         decoration:
-                            InputDecoration(labelText: 'Confirm Password'),
+                            InputDecoration(labelText: 'Passwort bestätigen'),
                         obscureText: true,
                         validator: (value) {
                           if (value != _passwordController.text) {
-                            return 'Passwords do not match!';
+                            return 'Passwords stimmt nicht überein!';
                           }
                         },
                         onSaved: (val) {
@@ -80,7 +80,7 @@ class ChangePassword extends StatelessWidget {
                         },
                       ),
                       RaisedButton(
-                        child: Text('Save'),
+                        child: Text('Speichern'),
                         color: Theme.of(context).primaryColor,
                         textColor:
                             Theme.of(context).primaryTextTheme.button.color,

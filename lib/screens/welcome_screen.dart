@@ -17,7 +17,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         elevation: 0,
-        title: Text('WelcomeScreen'),
+        title: Text('Willkommen'),
       ),
       drawer: AppDrawer(),
       body: SafeArea(

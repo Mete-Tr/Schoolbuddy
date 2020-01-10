@@ -20,7 +20,7 @@ class _NotesScreenState extends State<NotesScreen> {
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         elevation: 0,
-        title: Text('Notes'),
+        title: Text('Notizen'),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -63,7 +63,7 @@ class _NotesListState extends State<NotesList> {
           child: list.isEmpty
               ? Center(
                   child: Text(
-                    'No Data yet',
+                    'Keine Notizen vorhanden',
                     style: TextStyle(fontSize: 30, color: Colors.white),
                   ),
                 )
@@ -91,19 +91,19 @@ class _NotesListState extends State<NotesList> {
                         return showDialog(
                           context: context,
                           builder: (ctx) => AlertDialog(
-                            title: Text('Are you sure?'),
+                            title: Text('Bist du sicher?'),
                             content: Text(
-                              'Do you want to remove the item from the list?',
+                              'Willst du diese Notiz löschen?',
                             ),
                             actions: <Widget>[
                               FlatButton(
-                                child: Text('No'),
+                                child: Text('Nein'),
                                 onPressed: () {
                                   Navigator.of(ctx).pop(false);
                                 },
                               ),
                               FlatButton(
-                                child: Text('Yes'),
+                                child: Text('Ja'),
                                 onPressed: () {
                                   Navigator.of(ctx).pop(true);
                                 },

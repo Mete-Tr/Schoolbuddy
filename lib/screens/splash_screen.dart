@@ -12,7 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Add a new note'),
+          title: Text('Neue Notiz erstellen'),
         ),
         body: Center(
           child: Text('Loading...'),

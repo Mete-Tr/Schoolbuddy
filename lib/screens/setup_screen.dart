@@ -14,12 +14,11 @@ class _SetupScreenState extends State<SetupScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    //TODO: get a List instead of a Future
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         elevation: 0,
-        title: Text('Setup your Subjekts'),
+        title: Text('Kurse einrichten'),
       ),
       body: SafeArea(
         minimum: EdgeInsets.only(left: 5, right: 5),
@@ -39,7 +38,7 @@ class _SetupScreenState extends State<SetupScreen> {
                       return Center(
                         child: DropdownButton<String>(
                           hint: Text(
-                            'Choose a class',
+                            'Wähle deine Klasse',
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 23),

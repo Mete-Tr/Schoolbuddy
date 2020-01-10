@@ -25,7 +25,7 @@ class ChangeEmail extends StatelessWidget {
     return Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
         appBar: AppBar(
-          title: Text('Change Email'),
+          title: Text('Email ändern'),
         ),
         body: SafeArea(
           minimum: EdgeInsets.only(left: 5, right: 5),
@@ -41,11 +41,11 @@ class ChangeEmail extends StatelessWidget {
                         TextFormField(
                           obscureText: true,
                           decoration: InputDecoration(
-                            labelText: 'Password',
+                            labelText: 'Passwort',
                           ),
                           validator: (value) {
                             if (value.isEmpty || value.length < 5) {
-                              return 'Password is too short!';
+                              return 'Password ist zu kurz, pwd > 4!';
                             }
                           },
                           onSaved: (val) {
@@ -54,11 +54,11 @@ class ChangeEmail extends StatelessWidget {
                         ),
                         TextFormField(
                           decoration: InputDecoration(
-                            labelText: 'New Email',
+                            labelText: 'Neue Email',
                           ),
                           validator: (value) {
                             if (value.isEmpty || !value.contains('@')) {
-                              return 'Not a vald Email address';
+                              return 'keine gültige Email adresse';
                             }
                           },
                           onSaved: (val) {
@@ -66,7 +66,7 @@ class ChangeEmail extends StatelessWidget {
                           },
                         ),
                         RaisedButton(
-                          child: Text('Save'),
+                          child: Text('Speichern'),
                           color: Theme.of(context).primaryColor,
                           textColor:
                               Theme.of(context).primaryTextTheme.button.color,

@@ -155,6 +155,7 @@ class _AuthCardState extends State<AuthCard>
           _authData['email'],
           _authData['password'],
         );
+        _authData['password'] = null;
         await auth.addFcmDevice(to);
       } else {
         await auth.signUp(
@@ -226,7 +227,7 @@ class _AuthCardState extends State<AuthCard>
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value.isEmpty || !value.contains('@')) {
-                      return 'Invalid email!';
+                      return 'Keine Gültige E-Mail!';
                     }
                   },
                   onSaved: (value) {
@@ -234,12 +235,12 @@ class _AuthCardState extends State<AuthCard>
                   },
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Password'),
+                  decoration: InputDecoration(labelText: 'Passwort'),
                   obscureText: true,
                   controller: _passwordController,
                   validator: (value) {
                     if (value.isEmpty || value.length < 5) {
-                      return 'Password is too short!';
+                      return 'Passwort ist zu kurz pwd > 4!';
                     }
                   },
                   onSaved: (value) {
@@ -320,7 +321,7 @@ class _AuthCardState extends State<AuthCard>
                         EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
                     color: Theme.of(context).primaryColor,
                     textColor: Theme.of(context).primaryTextTheme.button.color,
-                    child: Text('Forgot password'),
+                    child: Text('Passwort vergessen'),
                     onPressed: () {
                       openUrl(
                           'https://schoolbuddy.herokuapp.com/password-reset/');

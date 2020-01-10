@@ -28,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               backgroundColor: Theme.of(context).primaryColor,
               appBar: AppBar(
                 elevation: 0,
-                title: Text('Profile'),
+                title: Text('Dein Profil'),
                 actions: <Widget>[
                   Icon(Icons.edit),
                   Switch(
@@ -69,7 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                   SizedBox(width: 10),
                                   Text(
-                                    '\tClass: ${user['klasse']}',
+                                    '\tKlasse: ${user['klasse']}',
                                     style: TextStyle(fontSize: 20),
                                   )
                                 ],
@@ -83,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               else
                                 TextFormField(
                                   decoration: InputDecoration(
-                                    labelText: 'New name',
+                                    labelText: 'Neuer Name',
                                   ),
                                   onSaved: (val) {
                                     //TODO: Save new Name
@@ -97,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               if (edit)
                                 Center(
                                   child: RaisedButton(
-                                    child: Text('Save'),
+                                    child: Text('Speichern'),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30),
                                     ),
@@ -122,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: RaisedButton(
                         color: Colors.white,
                         textColor: Theme.of(context).primaryColor,
-                        child: Text('Change Email'),
+                        child: Text('Email ändern'),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -140,7 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        child: Text('Change Password'),
+                        child: Text('Passwort ändern'),
                         onPressed: () {
                           Navigator.of(context)
                               .pushNamed(ChangePassword.routhName);

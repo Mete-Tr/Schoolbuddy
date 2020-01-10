@@ -15,7 +15,7 @@ class _TimetableScreenState extends State<TimetableScreen> {
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         elevation: 0,
-        title: Text('Timetable'),
+        title: Text('Stundenplan'),
       ),
       drawer: AppDrawer(),
       body: SafeArea(

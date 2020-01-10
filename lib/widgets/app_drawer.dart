@@ -14,12 +14,12 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           AppBar(
-            title: Text('Navigator'),
+            title: Text('Navigation'),
             automaticallyImplyLeading: false,
           ),
           ListTile(
             leading: Icon(Icons.home),
-            title: Text('Welcome Screen'),
+            title: Text('Willkommen'),
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(WelcomeScreen.routhName);
@@ -28,7 +28,7 @@ class AppDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.person),
-            title: Text('Profile Screen'),
+            title: Text('Dein Profil'),
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(ProfileScreen.routhName);
@@ -37,7 +37,7 @@ class AppDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.table_chart),
-            title: Text('Timetable'),
+            title: Text('Stundenplan'),
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(TimetableScreen.routhName);
@@ -46,7 +46,7 @@ class AppDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.done),
-            title: Text('Homeworks'),
+            title: Text('Hausaufgaben'),
             onTap: () {
               // Navigation...
             },
@@ -54,7 +54,7 @@ class AppDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.note),
-            title: Text('Notes'),
+            title: Text('Notizen'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(NotesScreen.routhName);
             },
@@ -62,7 +62,7 @@ class AppDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.exit_to_app),
-            title: Text('Logout'),
+            title: Text('Ausloggen'),
             onTap: () {
               Provider.of<AuthProv>(context).logout();
             },

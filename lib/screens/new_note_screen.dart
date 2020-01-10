@@ -22,7 +22,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         elevation: 0,
-        title: Text('Add a new note'),
+        title: Text('Neue Notiz erstellen'),
       ),
       body: SafeArea(
         minimum: EdgeInsets.only(left: 5, right: 5),
@@ -38,7 +38,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
               child: Column(
                 children: <Widget>[
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Title'),
+                    decoration: InputDecoration(labelText: 'Titel'),
                     controller: titleController,
                     keyboardType: TextInputType.text,
                     onChanged: (val) {
@@ -46,7 +46,8 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                     },
                   ),
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Enter some text'),
+                    decoration:
+                        InputDecoration(labelText: 'Gib deinen Tet ein'),
                     controller: textController,
                     keyboardType: TextInputType.multiline,
                     maxLines: 7,
@@ -56,7 +57,7 @@ class _NewNoteScreenState extends State<NewNoteScreen> {
                   ),
                   RaisedButton(
                     child: Text(
-                      'Save',
+                      'Speichern',
                       style: TextStyle(color: Colors.white),
                     ),
                     color: Theme.of(context).primaryColor,
