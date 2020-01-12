@@ -261,8 +261,8 @@ class _AuthCardState extends State<AuthCard>
                         children: <Widget>[
                           TextFormField(
                             enabled: _authMode == AuthMode.Signup,
-                            decoration:
-                                InputDecoration(labelText: 'Confirm Password'),
+                            decoration: InputDecoration(
+                                labelText: 'Passwort bestätigen'),
                             obscureText: true,
                             validator: _authMode == AuthMode.Signup
                                 ? (value) {
@@ -273,13 +273,13 @@ class _AuthCardState extends State<AuthCard>
                                 : null,
                           ),
                           TextFormField(
-                            decoration: InputDecoration(labelText: 'Firstname'),
+                            decoration: InputDecoration(labelText: 'Vorname'),
                             onSaved: (value) {
                               _authData['firstname'] = value;
                             },
                           ),
                           TextFormField(
-                            decoration: InputDecoration(labelText: 'Lastname'),
+                            decoration: InputDecoration(labelText: 'Nachname'),
                             onSaved: (value) {
                               _authData['lastname'] = value;
                             },

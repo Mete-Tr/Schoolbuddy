@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:x/widgets/custom_listitem.dart';
 
 import '../provider/authProv.dart';
 
@@ -11,6 +12,14 @@ class SetupScreen extends StatefulWidget {
 
 class _SetupScreenState extends State<SetupScreen> {
   var currentitem;
+  bool gotList = false;
+
+  void saveClass(String newValueSelected) {
+    setState(() {
+      currentitem = newValueSelected;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -40,8 +49,9 @@ class _SetupScreenState extends State<SetupScreen> {
                           hint: Text(
                             'Wähle deine Klasse',
                             style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 23),
+                              fontSize: 23,
+                              color: Colors.black,
+                            ),
                           ),
                           value: currentitem,
                           items: list.map((String item) {
@@ -50,18 +60,16 @@ class _SetupScreenState extends State<SetupScreen> {
                               child: Text(
                                 item,
                                 style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
                                   fontSize: 23,
                                 ),
                               ),
                             );
                           }).toList(),
                           onChanged: (String newValueSelected) {
-                            setState(() {
-                              currentitem = newValueSelected;
-                            });
+                            saveClass(newValueSelected);
                             Provider.of<AuthProv>(context)
                                 .setClass(currentitem);
+                            gotList = true;
                           },
                         ),
                       );
@@ -73,18 +81,49 @@ class _SetupScreenState extends State<SetupScreen> {
                   },
                 ),
                 if (currentitem != null)
-                  FutureBuilder(
-                    future:
-                        Provider.of<AuthProv>(context).getCourses(currentitem),
-                    builder: (context, snapshot) {
-                      if (snapshot?.hasData ?? false) {
-                        return Container(
-                          //TODO: richtig anzeigen
-                          child: Text('yeeees'),
-                        );
-                      } else
-                        return Container();
-                    },
+                  Column(
+                    children: <Widget>[
+                      FutureBuilder(
+                        future: Provider.of<AuthProv>(context)
+                            .getCourses(currentitem),
+                        builder: (context, snapshot) {
+                          if (snapshot?.hasData ?? false) {
+                            List<dynamic> list = snapshot.data;
+                            return Container(
+                              height: size.height * 0.77,
+                              child: ListView.builder(
+                                itemCount: list.length,
+                                itemBuilder: (ctx, i) {
+                                  return CustomListitem(
+                                    list[i]['subject'],
+                                    list[i]['teacher'],
+                                    list[i]['room_name'],
+                                    list[i]['color'],
+                                  );
+                                },
+                              ),
+                            );
+                          } else {
+                            gotList = false;
+                            return Container();
+                          }
+                        },
+                      ),
+                      if (gotList)
+                        RaisedButton(
+                          child: Text('Speichern'),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          color: Theme.of(context).primaryColor,
+                          textColor:
+                              Theme.of(context).primaryTextTheme.button.color,
+                          onPressed: () {
+                            Provider.of<AuthProv>(context, listen: false)
+                                .setSeenTrue();
+                          },
+                        ),
+                    ],
                   )
               ],
             ),

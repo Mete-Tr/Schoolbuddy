@@ -12,10 +12,10 @@ String _firstname;
 String _lastname;
 String _email;
 String _klasse;
-int _id;
 DateTime _expiryDate;
 Timer _authTimer;
 bool _seen = false;
+List<String> myCoureses = [];
 
 class AuthProv with ChangeNotifier {
   bool get isAuth {
@@ -26,7 +26,32 @@ class AuthProv with ChangeNotifier {
   }
 
   bool get isSeen {
+    return _seen;
+  }
+
+  bool addToCourseList(String course) {
+    myCoureses.add(course);
     return true;
+  }
+
+  bool removeFromCourseList(String course) {
+    myCoureses.remove(course);
+    return true;
+  }
+
+  Future<bool> setSeenTrue() async {
+    final url = 'https://schoolbuddy.herokuapp.com/api/user/me/';
+
+    final prefs = await SharedPreferences.getInstance();
+
+    final response = await http.patch(url, headers: {
+      'Authorization': 'token ' + _token,
+    }, body: {
+      'seen': 'true'
+    });
+    _seen = true;
+    prefs.setBool('seen', _seen);
+    notifyListeners();
   }
 
   Future<bool> setClass(String klasse) async {
@@ -114,14 +139,14 @@ class AuthProv with ChangeNotifier {
     return list;
   }
 
-  Future<List> getCourses(String klasse) async {
+  Future<List<dynamic>> getCourses(String klasse) async {
     final url = 'https://schoolbuddy.herokuapp.com/api/sb/course/';
 
     final response = await http.get(url, headers: {
       'Authorization': 'token ' + _token,
     });
     final tmp = json.decode(response.body);
-    final tmp2 = tmp['results'];
+    List<dynamic> tmp2 = tmp['results'];
     return tmp2;
   }
 
@@ -143,9 +168,12 @@ class AuthProv with ChangeNotifier {
       'device_id': identifier,
       'registration_id': fcmToken,
       'type': 'android',
-      'user': '$_id'
+      'user': '$_email'
     });
-    return true;
+    if (response == null)
+      return false;
+    else
+      return true;
   }
 
   Future<bool> signIn(String email, String password) async {
@@ -158,7 +186,6 @@ class AuthProv with ChangeNotifier {
 
     final signinData = (json.decode(response.body)) as Map<String, dynamic>;
     _token = signinData['token'];
-    _id = signinData['user_id'];
     _firstname = signinData['firstname'];
     _lastname = signinData['lastname'];
     _email = signinData['email'];
@@ -169,26 +196,15 @@ class AuthProv with ChangeNotifier {
     );
 
     _autoLogout();
-    notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('token', _token);
-    prefs.setInt('id', _id);
     prefs.setString('firstname', _firstname);
     prefs.setString('lastname', _lastname);
     prefs.setString('email', _email);
     prefs.setString('klasse', _klasse);
     prefs.setString('expiryDate', _expiryDate.toIso8601String());
     prefs.setBool('seen', _seen);
-    // final userData = json.encode({
-    //   'token': _token,
-    //   'id': _id,
-    //   'firstname': _firstname,
-    //   'lastname': _lastname,
-    //   'email': _email,
-    //   'klasse': _klasse,
-    //   'expiryDate': _expiryDate.toIso8601String(),
-    // });
-    // prefs.setString('userData', userData);
+    notifyListeners();
     if (response == null)
       return false;
     else
@@ -197,7 +213,6 @@ class AuthProv with ChangeNotifier {
 
   Future<bool> logout() async {
     _token = null;
-    _id = null;
     _lastname = null;
     _firstname = null;
     _expiryDate = null;
@@ -222,8 +237,6 @@ class AuthProv with ChangeNotifier {
       return false;
     }
 
-    // final extractedUser =
-    //     json.decode(prefs.getString('userData')) as Map<String, dynamic>;
     final expiryDate = DateTime.parse(p.getString('expiryDate'));
 
     if (expiryDate.isBefore(DateTime.now())) {
@@ -235,10 +248,9 @@ class AuthProv with ChangeNotifier {
     _email = p.getString('email');
     _firstname = p.getString('firstname');
     _lastname = p.getString('lastname');
-    _id = p.getInt('id');
     _klasse = p.getString('klasse');
-    notifyListeners();
     _autoLogout();
+    notifyListeners();
     return true;
   }
 
