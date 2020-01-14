@@ -14,7 +14,6 @@ class NotesProv with ChangeNotifier {
   Future<bool> postNote(String text, String title, BuildContext context) async {
     final dbNotes = Provider.of<NoteDao>(context);
     final prefs = await SharedPreferences.getInstance();
-    final tmp = prefs.getString('userData');
     final token = prefs.getString('token');
     final response = await http.post(url, headers: {
       'Authorization': 'token ' + token,
@@ -40,12 +39,11 @@ class NotesProv with ChangeNotifier {
     final url = 'http://schoolbuddy.herokuapp.com/api/sb/notes/$id/';
     final dbNotes = Provider.of<NoteDao>(context);
     final prefs = await SharedPreferences.getInstance();
-    final tmp = prefs.getString('userData');
-    final token = json.decode(tmp);
+    final token = prefs.getString('token');
     final response = await http.delete(
       url,
       headers: {
-        'Authorization': 'token ' + token['token'],
+        'Authorization': 'token ' + token,
       },
     );
     dbNotes.deleteNote(note);

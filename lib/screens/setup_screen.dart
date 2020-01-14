@@ -99,7 +99,7 @@ class _SetupScreenState extends State<SetupScreen> {
                                       list[i]['teacher']['lastname'],
                                       list[i]['room_name'],
                                       list[i]['color'],
-                                      list[i]['']);
+                                      list[i]['id']);
                                 },
                               ),
                             );

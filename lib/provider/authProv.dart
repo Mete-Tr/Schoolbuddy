@@ -29,13 +29,15 @@ class AuthProv with ChangeNotifier {
     return _seen;
   }
 
-  bool addToCourseList(int course) {
-    myCoureses.add('$course');
+  bool addToCourseList(int courseID) {
+    myCoureses.add('$courseID');
+    print(myCoureses);
     return true;
   }
 
-  bool removeFromCourseList(int course) {
-    myCoureses.remove('$course');
+  bool removeFromCourseList(int courseID) {
+    myCoureses.remove('$courseID');
+    print(myCoureses);
     return true;
   }
 
@@ -52,6 +54,18 @@ class AuthProv with ChangeNotifier {
     _seen = true;
     prefs.setBool('seen', _seen);
     notifyListeners();
+    return true;
+  }
+
+  Future<List> setMyCourses() async {
+    //TODO: get the Link, correct the body etc.
+    final url = '';
+
+    final response = http.post(url, headers: {
+      'Authorization': 'token ' + _token,
+    }, body: {
+      'courses': myCoureses
+    });
   }
 
   Future<bool> setClass(String klasse) async {

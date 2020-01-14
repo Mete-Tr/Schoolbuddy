@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         builder: (ctx, auth, _) => MaterialApp(
           title: 'SchoolBuddy',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primaryColor: Colors.blue,
           ),
           home: auth.isAuth
               ? auth.isSeen ? WelcomeScreen() : SetupScreen()
