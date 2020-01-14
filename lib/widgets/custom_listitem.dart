@@ -10,12 +10,14 @@ class CustomListitem extends StatefulWidget {
   String tmpColor;
   String col;
   Color color;
+  int id;
 
   CustomListitem(
     this.subject,
     this.teacher,
     this.room,
     this.tmpColor,
+    this.id,
   ) {
     col = '0xff' + tmpColor.replaceFirst('#', '');
     color = Color(int.parse(col));
@@ -73,11 +75,10 @@ class _CustomListitemState extends State<CustomListitem> {
                   check = val;
                 });
                 if (val == true)
-                  Provider.of<AuthProv>(context)
-                      .addToCourseList(widget.subject);
+                  Provider.of<AuthProv>(context).addToCourseList(widget.id);
                 else if (val == false)
                   Provider.of<AuthProv>(context)
-                      .removeFromCourseList(widget.subject);
+                      .removeFromCourseList(widget.id);
               },
             )
           ],

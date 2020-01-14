@@ -29,13 +29,13 @@ class AuthProv with ChangeNotifier {
     return _seen;
   }
 
-  bool addToCourseList(String course) {
-    myCoureses.add(course);
+  bool addToCourseList(int course) {
+    myCoureses.add('$course');
     return true;
   }
 
-  bool removeFromCourseList(String course) {
-    myCoureses.remove(course);
+  bool removeFromCourseList(int course) {
+    myCoureses.remove('$course');
     return true;
   }
 

@@ -15,9 +15,9 @@ class NotesProv with ChangeNotifier {
     final dbNotes = Provider.of<NoteDao>(context);
     final prefs = await SharedPreferences.getInstance();
     final tmp = prefs.getString('userData');
-    final token = json.decode(tmp);
+    final token = prefs.getString('token');
     final response = await http.post(url, headers: {
-      'Authorization': 'token ' + token['token'],
+      'Authorization': 'token ' + token,
     }, body: {
       'note_title': title,
       'note_content': text
