@@ -95,8 +95,8 @@ class _SetupScreenState extends State<SetupScreen> {
                                 itemCount: list.length,
                                 itemBuilder: (ctx, i) {
                                   return CustomListitem(
-                                    list[i]['subject'],
-                                    list[i]['teacher'],
+                                    list[i]['subject']['subject_name'],
+                                    list[i]['teacher']['lastname'],
                                     list[i]['room_name'],
                                     list[i]['color'],
                                   );
