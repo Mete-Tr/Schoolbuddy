@@ -15,7 +15,7 @@ String _klasse;
 DateTime _expiryDate;
 Timer _authTimer;
 bool _seen = false;
-List<String> myCoureses = [];
+List<int> myCoureses = [];
 
 class AuthProv with ChangeNotifier {
   bool get isAuth {
@@ -30,14 +30,14 @@ class AuthProv with ChangeNotifier {
   }
 
   bool addToCourseList(int courseID) {
-    myCoureses.add('$courseID');
-    print(myCoureses);
+    myCoureses.add(courseID);
+    // print(myCoureses);
     return true;
   }
 
   bool removeFromCourseList(int courseID) {
-    myCoureses.remove('$courseID');
-    print(myCoureses);
+    myCoureses.remove(courseID);
+    // print(myCoureses);
     return true;
   }
 
@@ -58,14 +58,20 @@ class AuthProv with ChangeNotifier {
   }
 
   Future<List> setMyCourses() async {
-    //TODO: get the Link, correct the body etc.
-    final url = '';
+    final url = 'https://schoolbuddy.herokuapp.com/api/sb/timetable/';
 
-    final response = http.post(url, headers: {
+    List sta;
+    //TODO: error -> erwartet String, not working
+    final response = await http.post(url, headers: {
       'Authorization': 'token ' + _token,
     }, body: {
-      'courses': myCoureses
+      "user": _email,
+      "course": {'ids': myCoureses}
     });
+    print(myCoureses);
+    print(response.body);
+    final tmp = response;
+    return sta;
   }
 
   Future<bool> setClass(String klasse) async {
@@ -263,6 +269,7 @@ class AuthProv with ChangeNotifier {
     _firstname = p.getString('firstname');
     _lastname = p.getString('lastname');
     _klasse = p.getString('klasse');
+    _seen = p.getBool('seen');
     _autoLogout();
     notifyListeners();
     return true;

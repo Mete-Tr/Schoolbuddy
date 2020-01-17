@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:x/provider/profileProv.dart';
 import '../models/subject.dart';
 import '../widgets/app_drawer.dart';
 
@@ -29,24 +32,27 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               width: double.infinity,
               child: Card(
                 elevation: 10,
-                child: Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text('Clock'),
-                          Icon(
-                            Icons.trip_origin,
-                            size: 30,
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[],
-                      ),
-                    ],
-                  ),
+                child: FutureBuilder(
+                  future: Provider.of<ProfileProv>(context).getUserData(),
+                  builder: (context, snapshot) {
+                    SharedPreferences prefs = snapshot.data;
+                    if (snapshot?.hasData ?? false) {
+                      return Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Text(
+                          'Hallo, ' +
+                              prefs.getString('firstname') +
+                              ' ' +
+                              prefs.getString('lastname'),
+                          style: TextStyle(fontSize: 23),
+                        ),
+                      );
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
                 ),
               ),
             ),

@@ -121,6 +121,8 @@ class _SetupScreenState extends State<SetupScreen> {
                           onPressed: () {
                             Provider.of<AuthProv>(context, listen: false)
                                 .setSeenTrue();
+                            Provider.of<AuthProv>(context, listen: false)
+                                .setMyCourses();
                           },
                         ),
                     ],
