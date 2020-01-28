@@ -187,6 +187,11 @@ class _AuthCardState extends State<AuthCard>
       setState(() {
         _authMode = AuthMode.Login;
       });
+      final snackBar = SnackBar(
+        content: Text('Bitte bestätige deine E-Mail Adresse'),
+      );
+      if (_authData['email'].isNotEmpty)
+        Scaffold.of(context).showSnackBar(snackBar);
       _controller.reverse();
     }
   }
@@ -228,7 +233,7 @@ class _AuthCardState extends State<AuthCard>
                       return 'Keine Gültige E-Mail!';
                     }
                   },
-                  onSaved: (value) {
+                  onChanged: (value) {
                     _authData['email'] = value;
                   },
                 ),
@@ -328,6 +333,7 @@ class _AuthCardState extends State<AuthCard>
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   textColor: Theme.of(context).primaryColor,
                 ),
+                Text('data')
               ],
             ),
           ),

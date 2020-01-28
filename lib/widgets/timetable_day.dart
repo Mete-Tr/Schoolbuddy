@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TimetableDay extends StatelessWidget {
+  //TODO: komplett neu machen
   final String day;
   TimetableDay(this.day);
 
   @override
   Widget build(BuildContext context) {
     final device = MediaQuery.of(context).size;
-    print(device.height);
 
     List<String> list = ['Subjekt'];
 
@@ -17,7 +17,6 @@ class TimetableDay extends StatelessWidget {
       ),
       padding: EdgeInsets.all(4),
       width: device.width / 5 - 2,
-      // height: device.height,
       child: Column(
         children: <Widget>[
           Text(

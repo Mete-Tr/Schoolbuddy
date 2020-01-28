@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:x/screens/homework_screen.dart';
 import 'package:x/screens/notes_screen.dart';
 import 'package:x/screens/profile_screen.dart';
 import 'package:x/screens/timetable_screen.dart';
@@ -48,7 +49,7 @@ class AppDrawer extends StatelessWidget with ChangeNotifier {
             leading: Icon(Icons.done),
             title: Text('Hausaufgaben'),
             onTap: () {
-              // Navigation...
+              Navigator.of(context).pushReplacementNamed(Homework.routhName);
             },
           ),
           Divider(),

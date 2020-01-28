@@ -58,16 +58,18 @@ class AuthProv with ChangeNotifier {
   }
 
   Future<List> setMyCourses() async {
-    final url = 'https://schoolbuddy.herokuapp.com/api/sb/timetable/';
+    final url = 'https://schoolbuddy.herokuapp.com/api/user/me';
 
     List sta;
     //TODO: error -> erwartet String, not working
-    final response = await http.post(url, headers: {
-      'Authorization': 'token ' + _token,
-    }, body: {
-      "user": _email,
-      "course": {'ids': myCoureses}
-    });
+    final response = await http.patch(
+      url,
+      headers: {
+        'Authorization': 'token ' + _token,
+        'Content-type': 'application/json'
+      },
+      body: '{course: $myCoureses} ',
+    );
     print(myCoureses);
     print(response.body);
     final tmp = response;
@@ -197,15 +199,22 @@ class AuthProv with ChangeNotifier {
   }
 
   Future<bool> signIn(String email, String password) async {
-    final url = 'https://schoolbuddy.herokuapp.com/api/user/token/';
+    String url = 'https://schoolbuddy.herokuapp.com/api/user/token/';
 
-    final response = await http.post(url, body: {
+    final tmp = await http.post(url, body: {
       'email': email,
       'password': password,
     });
 
+    final tmp2 = json.decode(tmp.body);
+    _token = tmp2['token'];
+
+    url = 'https://schoolbuddy.herokuapp.com/api/user/me';
+    final response = await http.get(url, headers: {
+      'Authorization': 'token ' + _token,
+    });
+
     final signinData = (json.decode(response.body)) as Map<String, dynamic>;
-    _token = signinData['token'];
     _firstname = signinData['firstname'];
     _lastname = signinData['lastname'];
     _email = signinData['email'];
