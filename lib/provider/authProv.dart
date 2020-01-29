@@ -59,16 +59,20 @@ class AuthProv with ChangeNotifier {
 
   Future<List> setMyCourses() async {
     final url = 'https://schoolbuddy.herokuapp.com/api/user/me';
+    Map<String, String> headers = {
+      'Authorization': 'token ' + _token,
+      'Content-type': 'application/json'
+    };
+
+    String json = '{"course": [1,2] }';
+    final test = {"course": myCoureses};
 
     List sta;
     //TODO: error -> erwartet String, not working
     final response = await http.patch(
       url,
-      headers: {
-        'Authorization': 'token ' + _token,
-        'Content-type': 'application/json'
-      },
-      body: '{course: $myCoureses} ',
+      headers: headers,
+      body: jsonEncode(test),
     );
     print(myCoureses);
     print(response.body);
