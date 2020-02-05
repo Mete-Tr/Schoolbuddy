@@ -156,6 +156,16 @@ class AuthProv with ChangeNotifier {
     return list;
   }
 
+  Future<bool> getMyCoureses() async {
+    final url = 'https://schoolbuddy.herokuapp.com/api/user/timetable';
+
+    final response = await http.get(url, headers: {
+      'Authorization': 'token ' + _token,
+    });
+    final data = json.decode(response.body);
+    return true;
+  }
+
   Future<List<dynamic>> getCourses(String klasse) async {
     final url = 'https://schoolbuddy.herokuapp.com/api/sb/course/';
 

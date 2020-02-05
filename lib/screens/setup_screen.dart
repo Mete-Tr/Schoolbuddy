@@ -95,11 +95,13 @@ class _SetupScreenState extends State<SetupScreen> {
                                 itemCount: list.length,
                                 itemBuilder: (ctx, i) {
                                   return CustomListitem(
-                                      list[i]['subject']['subject_name'],
-                                      list[i]['teacher']['lastname'],
-                                      list[i]['room_name'],
-                                      list[i]['color'],
-                                      list[i]['id']);
+                                    list[i]['subject']['subject_name'],
+                                    list[i]['teacher']['lastname'],
+                                    list[i]['room_name'],
+                                    list[i]['color'],
+                                    list[i]['id'],
+                                    list[i]['teacher']['gender'],
+                                  );
                                 },
                               ),
                             );
@@ -123,6 +125,9 @@ class _SetupScreenState extends State<SetupScreen> {
                                 .setSeenTrue();
                             Provider.of<AuthProv>(context, listen: false)
                                 .setMyCourses();
+                            // Future.delayed(Duration(seconds: 1));
+                            Provider.of<AuthProv>(context, listen: false)
+                                .getMyCoureses();
                           },
                         ),
                     ],

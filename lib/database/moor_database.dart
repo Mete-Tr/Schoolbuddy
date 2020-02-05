@@ -12,14 +12,26 @@ class Notes extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@UseMoor(tables: [Notes], daos: [NoteDao])
+class Timetable extends Table {
+  IntColumn get id => integer()();
+  TextColumn get lastname => text()();
+  TextColumn get gender => text()();
+  TextColumn get subject_acronym => text()();
+  TextColumn get start_time => text()();
+  TextColumn get end_time => text()();
+  TextColumn get period => text()();
+  TextColumn get interval => text()();
+  TextColumn get room => text()();
+}
+
+@UseMoor(tables: [Notes, Timetable], daos: [NoteDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase()
       : super(FlutterQueryExecutor.inDatabaseFolder(
             path: 'bd.sqlite', logStatements: true));
 
   @override
-  int get schemaVersion => 10;
+  int get schemaVersion => 11;
 }
 
 @UseDao(tables: [Notes])

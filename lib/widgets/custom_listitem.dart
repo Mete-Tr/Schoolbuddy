@@ -11,14 +11,10 @@ class CustomListitem extends StatefulWidget {
   String col;
   Color color;
   int id;
+  String gender;
 
-  CustomListitem(
-    this.subject,
-    this.teacher,
-    this.room,
-    this.tmpColor,
-    this.id,
-  ) {
+  CustomListitem(this.subject, this.teacher, this.room, this.tmpColor, this.id,
+      this.gender) {
     col = '0xff' + tmpColor.replaceFirst('#', '');
     color = Color(int.parse(col));
   }
@@ -29,6 +25,7 @@ class CustomListitem extends StatefulWidget {
 
 class _CustomListitemState extends State<CustomListitem> {
   bool check = false;
+  String teacher;
   @override
   Widget build(BuildContext context) {
     // TODO: Design
@@ -57,7 +54,7 @@ class _CustomListitemState extends State<CustomListitem> {
                     style: TextStyle(fontSize: 20),
                   ),
                   Text(
-                    'Lehrer: ${widget.teacher}',
+                    'Lehrer: ${widget.gender == 'M' ? 'Herr ' + widget.teacher : widget.gender == 'W' ? 'Frau ' + widget.teacher : widget.teacher}',
                     style: TextStyle(fontSize: 17),
                   ),
                   Text(
@@ -74,9 +71,9 @@ class _CustomListitemState extends State<CustomListitem> {
                 setState(() {
                   check = val;
                 });
-                if (val == true)
+                if (val)
                   Provider.of<AuthProv>(context).addToCourseList(widget.id);
-                else if (val == false)
+                else if (!val)
                   Provider.of<AuthProv>(context)
                       .removeFromCourseList(widget.id);
               },
