@@ -17,8 +17,6 @@ class Timetable extends Table {
   TextColumn get lastname => text()();
   TextColumn get gender => text()();
   TextColumn get subject_acronym => text()();
-  TextColumn get start_time => text()();
-  TextColumn get end_time => text()();
   TextColumn get period => text()();
   TextColumn get interval => text()();
   TextColumn get room => text()();

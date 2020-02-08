@@ -59,7 +59,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  stops: [0, 1],
+                  stops: [0.4, 1],
                 ),
               ),
             ),
@@ -67,9 +67,10 @@ class _AuthScreenState extends State<AuthScreen> {
               height: deviceSize.height,
               width: deviceSize.width,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  Image.asset('assets/images/schoolbuddy_logo_2.jpeg'),
                   Flexible(
                     flex: deviceSize.width > 600 ? 2 : 1,
                     child: AuthCard(),
@@ -333,7 +334,14 @@ class _AuthCardState extends State<AuthCard>
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   textColor: Theme.of(context).primaryColor,
                 ),
-                Text('data')
+                if (_authMode == AuthMode.Signup)
+                  Text(
+                    'Mit der Registrierung akzeptieren sie unsere AGBs',
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
+                    textAlign: TextAlign.center,
+                  )
               ],
             ),
           ),
