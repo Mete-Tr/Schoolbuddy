@@ -14,12 +14,18 @@ class Notes extends Table {
 
 class Timetable extends Table {
   IntColumn get id => integer()();
-  TextColumn get lastname => text()();
   TextColumn get gender => text()();
-  TextColumn get subject_acronym => text()();
+  TextColumn get lastname => text()();
+  TextColumn get subjectAcronym => text()();
   TextColumn get period => text()();
   TextColumn get interval => text()();
   TextColumn get room => text()();
+  BoolColumn get isCancelled => boolean()();
+  BoolColumn get isCanged => boolean()();
+  TextColumn get massage => text()();
+
+  @override
+  Set<Column> get primaryKey => {id};
 }
 
 @UseMoor(tables: [Notes, Timetable], daos: [NoteDao])
@@ -29,7 +35,7 @@ class AppDatabase extends _$AppDatabase {
             path: 'bd.sqlite', logStatements: true));
 
   @override
-  int get schemaVersion => 11;
+  int get schemaVersion => 13;
 }
 
 @UseDao(tables: [Notes])

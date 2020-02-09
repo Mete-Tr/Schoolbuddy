@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:x/widgets/app_drawer.dart';
-import 'package:x/widgets/timetable_day.dart';
+// import 'package:x/widgets/timetable_day.dart';
 
 class TimetableScreen extends StatefulWidget {
   static const routhName = '/timetable';
@@ -9,8 +9,18 @@ class TimetableScreen extends StatefulWidget {
 }
 
 class _TimetableScreenState extends State<TimetableScreen> {
+  List<DataRow> list = [
+    DataRow(cells: [
+      DataCell(Text('1')),
+      DataCell(Text('1')),
+      DataCell(Text('1')),
+      DataCell(Text('1')),
+      DataCell(Text('1')),
+    ])
+  ];
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -20,15 +30,50 @@ class _TimetableScreenState extends State<TimetableScreen> {
       drawer: AppDrawer(),
       body: SafeArea(
         minimum: EdgeInsets.only(left: 5, right: 5),
-        child: Row(
-          children: <Widget>[
-            TimetableDay('Mo'),
-            TimetableDay('Di'),
-            TimetableDay('Mi'),
-            TimetableDay('Do'),
-            TimetableDay('Fr'),
-          ],
+        child: SingleChildScrollView(
+          child: Center(
+            child: DataTable(
+              columnSpacing: size.width / 8,
+              columns: [
+                DataColumn(
+                    label: Text(
+                  'Mo',
+                  style: TextStyle(color: Colors.white),
+                )),
+                DataColumn(
+                    label: Text(
+                  'Di',
+                  style: TextStyle(color: Colors.white),
+                )),
+                DataColumn(
+                    label: Text(
+                  'Mi',
+                  style: TextStyle(color: Colors.white),
+                )),
+                DataColumn(
+                    label: Text(
+                  'Do',
+                  style: TextStyle(color: Colors.white),
+                )),
+                DataColumn(
+                    label: Text(
+                  'Fr',
+                  style: TextStyle(color: Colors.white),
+                )),
+              ],
+              rows: list,
+            ),
+          ),
         ),
+        // child: Row(
+        //   children: <Widget>[
+        //     TimetableDay('Mo'),
+        //     TimetableDay('Di'),
+        //     TimetableDay('Mi'),
+        //     TimetableDay('Do'),
+        //     TimetableDay('Fr'),
+        //   ],
+        // ),
       ),
     );
   }
