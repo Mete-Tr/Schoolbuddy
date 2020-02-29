@@ -43,7 +43,7 @@ class ChangePassword extends StatelessWidget {
                       TextFormField(
                         obscureText: true,
                         decoration: InputDecoration(
-                          labelText: 'Altes Password',
+                          labelText: 'Aktuelles Password',
                         ),
                         validator: (value) {
                           if (value.isEmpty || value.length < 5) {

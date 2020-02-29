@@ -44,7 +44,7 @@ class ChangeEmail extends StatelessWidget {
                         TextFormField(
                           obscureText: true,
                           decoration: InputDecoration(
-                            labelText: 'Passwort',
+                            labelText: 'Aktuelles Passwort',
                           ),
                           validator: (value) {
                             if (value.isEmpty || value.length < 5) {

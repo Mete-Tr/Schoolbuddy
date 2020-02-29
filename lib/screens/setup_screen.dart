@@ -127,7 +127,7 @@ class _SetupScreenState extends State<SetupScreen> {
                                 .setMyCourses();
                             // Future.delayed(Duration(seconds: 1));
                             Provider.of<AuthProv>(context, listen: false)
-                                .getMyCoureses();
+                                .getMyCoureses(context);
                           },
                         ),
                     ],

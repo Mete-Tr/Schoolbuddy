@@ -4,8 +4,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:moor_flutter/moor_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:device_info/device_info.dart';
+import 'package:x/database/moor_database.dart';
 
 String _token;
 String _firstname;
@@ -156,13 +159,29 @@ class AuthProv with ChangeNotifier {
     return list;
   }
 
-  Future<bool> getMyCoureses() async {
+  Future<bool> getMyCoureses(BuildContext context) async {
+    final dbTimetable = Provider.of<TimetableDao>(context);
     final url = 'https://schoolbuddy.herokuapp.com/api/user/timetable';
 
     final response = await http.get(url, headers: {
       'Authorization': 'token ' + _token,
     });
-    final data = json.decode(response.body);
+    final serverData = json.decode(response.body);
+    for (int i = 0; i < 50; i++) {
+      String tmpDay = serverData['${i + 1}'];
+      List<String> dayData = tmpDay.split(';');
+      final timetable = TimetablesCompanion(
+          id: Value(int.parse(dayData[0])),
+          gender: Value(dayData[1]),
+          lastname: Value(dayData[2]),
+          subjectAcronym: Value(dayData[3]),
+          room: Value(dayData[4]),
+          isCancelled:
+              Value(dayData[5].toLowerCase() == 'false' ? false : true),
+          isCanged: Value(dayData[6].toLowerCase() == 'false' ? false : true),
+          massage: Value(dayData[7]));
+      dbTimetable.insertTimet(timetable);
+    }
     return true;
   }
 

@@ -12,13 +12,11 @@ class Notes extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-class Timetable extends Table {
+class Timetables extends Table {
   IntColumn get id => integer()();
   TextColumn get gender => text()();
   TextColumn get lastname => text()();
   TextColumn get subjectAcronym => text()();
-  TextColumn get period => text()();
-  TextColumn get interval => text()();
   TextColumn get room => text()();
   BoolColumn get isCancelled => boolean()();
   BoolColumn get isCanged => boolean()();
@@ -28,14 +26,14 @@ class Timetable extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@UseMoor(tables: [Notes, Timetable], daos: [NoteDao])
+@UseMoor(tables: [Notes, Timetables], daos: [NoteDao, TimetableDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase()
       : super(FlutterQueryExecutor.inDatabaseFolder(
             path: 'bd.sqlite', logStatements: true));
 
   @override
-  int get schemaVersion => 13;
+  int get schemaVersion => 1;
 }
 
 @UseDao(tables: [Notes])
@@ -50,4 +48,21 @@ class NoteDao extends DatabaseAccessor<AppDatabase>
   Future insertNote(Insertable<Note> note) => into(notes).insert(note);
   Future updateNote(Insertable<Note> note) => update(notes).replace(note);
   Future deleteNote(Insertable<Note> note) => delete(notes).delete(note);
+}
+
+@UseDao(tables: [Timetables])
+class TimetableDao extends DatabaseAccessor<AppDatabase>
+    with _$TimetableDaoMixin, ChangeNotifier {
+  final AppDatabase db;
+
+  TimetableDao(this.db) : super(db);
+
+  Future<List<Timetable>> getAlltimet() => select(timetables).get();
+  Stream<List<Timetable>> watchAllTimet() => select(timetables).watch();
+  Future insertTimet(Insertable<Timetable> timetable) =>
+      into(timetables).insert(timetable);
+  Future updateTimet(Insertable<Timetable> timetable) =>
+      update(timetables).replace(timetable);
+  Future deleteTimet(Insertable<Timetable> timetable) =>
+      delete(timetables).delete(timetable);
 }
