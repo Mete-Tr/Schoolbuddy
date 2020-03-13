@@ -25,7 +25,6 @@ class _NotesScreenState extends State<NotesScreen> {
           IconButton(
             icon: Icon(
               Icons.add,
-              color: Colors.white,
             ),
             onPressed: () {
               Navigator.of(context).pushNamed(NewNoteScreen.routhName);

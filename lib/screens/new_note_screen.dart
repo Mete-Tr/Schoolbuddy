@@ -10,10 +10,10 @@ class NewNoteScreen extends StatefulWidget {
 
 class _NewNoteScreenState extends State<NewNoteScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
+  final textController = TextEditingController();
+    final titleController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final textController = TextEditingController();
-    final titleController = TextEditingController();
     final device = MediaQuery.of(context).size;
     final noteProv = Provider.of<NotesProv>(context);
     final noteData = {'title': '', 'text': ''};

@@ -743,12 +743,11 @@ class HomeworkDatasCompanion extends UpdateCompanion<HomeworkData> {
     this.done = const Value.absent(),
   });
   HomeworkDatasCompanion.insert({
-    @required int hId,
+    this.hId = const Value.absent(),
     @required String title,
     @required String task,
     this.done = const Value.absent(),
-  })  : hId = Value(hId),
-        title = Value(title),
+  })  : title = Value(title),
         task = Value(task);
   HomeworkDatasCompanion copyWith(
       {Value<int> hId,
@@ -774,11 +773,8 @@ class $HomeworkDatasTable extends HomeworkDatas
   @override
   GeneratedIntColumn get hId => _hId ??= _constructHId();
   GeneratedIntColumn _constructHId() {
-    return GeneratedIntColumn(
-      'h_id',
-      $tableName,
-      false,
-    );
+    return GeneratedIntColumn('h_id', $tableName, false,
+        hasAutoIncrement: true, declaredAsPrimaryKey: true);
   }
 
   final VerificationMeta _titleMeta = const VerificationMeta('title');

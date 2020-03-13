@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:x/database/moor_database.dart';
 import 'package:x/provider/homeProv.dart';
+import 'package:x/provider/homeworkProv.dart';
 import 'package:x/provider/profileProv.dart';
 import 'package:x/screens/change_email.dart';
 import 'package:x/screens/change_password.dart';
@@ -37,11 +38,17 @@ class MyApp extends StatelessWidget {
           value: AppDatabase().noteDao,
         ),
         ChangeNotifierProvider.value(
+          value: AppDatabase().homeworkDataDao,
+        ),
+        ChangeNotifierProvider.value(
           value: ProfileProv(),
         ),
         ChangeNotifierProvider.value(
           value: HomeProv(),
-        )
+        ),
+        ChangeNotifierProvider.value(
+          value: HomeworkProv(),
+          )
       ],
       child: Consumer<AuthProv>(
         builder: (ctx, auth, _) => MaterialApp(

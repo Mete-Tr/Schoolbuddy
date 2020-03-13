@@ -27,10 +27,11 @@ class Timetables extends Table {
 }
 
 class HomeworkDatas extends Table {
-  IntColumn get hId => integer()();
+  IntColumn get hId => integer().autoIncrement()();
   TextColumn get title => text()();
   TextColumn get task => text()();
   BoolColumn get done => boolean().withDefault(Constant(false))();
+  DateTimeColumn get date => dateTime().withDefault(Constant(DateTime.now()))();
 
   Set<Column> get primaryKey => {hId};
   }
@@ -42,7 +43,7 @@ class AppDatabase extends _$AppDatabase {
             path: 'bd.sqlite', logStatements: true));
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 }
 
 @UseDao(tables: [HomeworkDatas])
@@ -51,12 +52,26 @@ class HomeworkDataDao extends DatabaseAccessor<AppDatabase>
   final AppDatabase db;
 
   HomeworkDataDao(this.db) : super(db);
+
+  
   
   Future<List<HomeworkData>> getAllHomeworks() => select(homeworkDatas).get();
-  Stream<List<HomeworkData>> watchAllHomeworks() => select(homeworkDatas).watch();
-  Future insertHomework(Insertable<HomeworkData> homework) => into(homeworkDatas).insert(homework);
-  Future updateHomework(Insertable<HomeworkData> homework) => update(homeworkDatas).replace(homework);
-  Future deleteHomework(Insertable<HomeworkData> homework) => delete(homeworkDatas).delete(homework);
+  Stream<List<HomeworkData>> watchAllHomeworks() {
+    return (select(homeworkDatas)
+    ..orderBy([
+      (t) => OrderingTerm(expression: t.hId, mode: OrderingMode.desc)
+    ])).watch();
+  }
+  Stream<List<HomeworkData>> watchAllDoneHomeworks() {
+    return (select(homeworkDatas)
+    ..orderBy([
+      (t) => OrderingTerm(expression: t.hId, mode: OrderingMode.desc)
+    ])
+    ..where((t) => t.done.equals(true))).watch();
+  }
+  Future insertHomework(Insertable<HomeworkData> homeworkData) => into(homeworkDatas).insert(homeworkData);
+  Future updateHomework(Insertable<HomeworkData> homeworkData) => update(homeworkDatas).replace(homeworkData);
+  Future deleteHomework(Insertable<HomeworkData> homeworkData) => delete(homeworkDatas).delete(homeworkData);
   }
 
 @UseDao(tables: [Notes])
@@ -67,7 +82,12 @@ class NoteDao extends DatabaseAccessor<AppDatabase>
   NoteDao(this.db) : super(db);
 
   Future<List<Note>> getAllNotes() => select(notes).get();
-  Stream<List<Note>> watchAllNotes() => select(notes).watch();
+  Stream<List<Note>> watchAllNotes()  {
+    return (select(notes)
+    ..orderBy([
+      (t) => OrderingTerm(expression: t.nId, mode: OrderingMode.desc)
+    ])).watch();
+  }
   Future insertNote(Insertable<Note> note) => into(notes).insert(note);
   Future updateNote(Insertable<Note> note) => update(notes).replace(note);
   Future deleteNote(Insertable<Note> note) => delete(notes).delete(note);

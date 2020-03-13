@@ -44,7 +44,6 @@ class _CustomListitemState extends State<CustomListitem> {
             SizedBox(width: 8),
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
