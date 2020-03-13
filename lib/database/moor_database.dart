@@ -4,16 +4,16 @@ import 'package:moor_flutter/moor_flutter.dart';
 part 'moor_database.g.dart';
 
 class Notes extends Table {
-  IntColumn get id => integer()();
+  IntColumn get nId => integer()();
   TextColumn get title => text()();
   TextColumn get noteText => text()();
 
   @override
-  Set<Column> get primaryKey => {id};
+  Set<Column> get primaryKey => {nId};
 }
 
 class Timetables extends Table {
-  IntColumn get id => integer()();
+  IntColumn get tId => integer()();
   TextColumn get gender => text()();
   TextColumn get lastname => text()();
   TextColumn get subjectAcronym => text()();
@@ -23,8 +23,17 @@ class Timetables extends Table {
   TextColumn get massage => text()();
 
   @override
-  Set<Column> get primaryKey => {id};
+  Set<Column> get primaryKey => {tId};
 }
+
+class HomeworkData extends Table {
+  IntColumn get hId => integer()();
+  TextColumn get title => text()();
+  TextColumn get task => text()();
+  BoolColumn get done => boolean()();
+
+  Set<Column> get primaryKey => {hId};
+  }
 
 @UseMoor(tables: [Notes, Timetables], daos: [NoteDao, TimetableDao])
 class AppDatabase extends _$AppDatabase {

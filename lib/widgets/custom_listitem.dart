@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:x/provider/authProv.dart';
 
 class CustomListitem extends StatefulWidget {
-  //TODO: Add color!
   String teacher;
   String subject;
   String room;
@@ -28,7 +27,6 @@ class _CustomListitemState extends State<CustomListitem> {
   String teacher;
   @override
   Widget build(BuildContext context) {
-    // TODO: Design
     return Card(
       elevation: 8,
       child: Container(

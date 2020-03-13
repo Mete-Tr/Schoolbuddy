@@ -6,6 +6,7 @@ import 'package:x/provider/profileProv.dart';
 import 'package:x/screens/change_email.dart';
 import 'package:x/screens/change_password.dart';
 import 'package:x/screens/homework_screen.dart';
+import 'package:x/screens/new_HM_screen.dart';
 import 'package:x/screens/new_note_screen.dart';
 import 'package:x/screens/profile_screen.dart';
 import 'package:x/screens/setup_screen.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
             ChangeEmail.routhName: (ctx) => ChangeEmail(),
             SetupScreen.routhName: (ctx) => SetupScreen(),
             Homework.routhName: (ctx) => Homework(),
+            NewHMScreen.routhName: (ctx) => NewHMScreen(),
           },
         ),
       ),
