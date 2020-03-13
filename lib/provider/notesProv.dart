@@ -23,7 +23,7 @@ class NotesProv with ChangeNotifier {
     });
     final resp = json.decode(response.body);
     final note = NotesCompanion(
-      id: Value(resp['id']),
+      nId: Value(resp['id']),
       title: Value(resp['note_title']),
       noteText: Value(resp['note_content']),
     );

@@ -113,7 +113,7 @@ class _NotesListState extends State<NotesList> {
                         );
                       },
                       onDismissed: (direction) {
-                        noteProv.deleteNote(list[i], list[i].id, context);
+                        noteProv.deleteNote(list[i], list[i].nId, context);
                       },
                       child: Card(
                         elevation: 8,

@@ -26,24 +26,38 @@ class Timetables extends Table {
   Set<Column> get primaryKey => {tId};
 }
 
-class HomeworkData extends Table {
+class HomeworkDatas extends Table {
   IntColumn get hId => integer()();
   TextColumn get title => text()();
   TextColumn get task => text()();
-  BoolColumn get done => boolean()();
+  BoolColumn get done => boolean().withDefault(Constant(false))();
 
   Set<Column> get primaryKey => {hId};
   }
 
-@UseMoor(tables: [Notes, Timetables], daos: [NoteDao, TimetableDao])
+@UseMoor(tables: [Notes, Timetables, HomeworkDatas], daos: [NoteDao, TimetableDao, HomeworkDataDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase()
       : super(FlutterQueryExecutor.inDatabaseFolder(
             path: 'bd.sqlite', logStatements: true));
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 4;
 }
+
+@UseDao(tables: [HomeworkDatas])
+class HomeworkDataDao extends DatabaseAccessor<AppDatabase>
+ with _$HomeworkDataDaoMixin, ChangeNotifier {
+  final AppDatabase db;
+
+  HomeworkDataDao(this.db) : super(db);
+  
+  Future<List<HomeworkData>> getAllHomeworks() => select(homeworkDatas).get();
+  Stream<List<HomeworkData>> watchAllHomeworks() => select(homeworkDatas).watch();
+  Future insertHomework(Insertable<HomeworkData> homework) => into(homeworkDatas).insert(homework);
+  Future updateHomework(Insertable<HomeworkData> homework) => update(homeworkDatas).replace(homework);
+  Future deleteHomework(Insertable<HomeworkData> homework) => delete(homeworkDatas).delete(homework);
+  }
 
 @UseDao(tables: [Notes])
 class NoteDao extends DatabaseAccessor<AppDatabase>
