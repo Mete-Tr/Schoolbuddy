@@ -41,6 +41,9 @@ class MyApp extends StatelessWidget {
           value: AppDatabase().homeworkDataDao,
         ),
         ChangeNotifierProvider.value(
+          value: AppDatabase().timetableDao,
+        ),
+        ChangeNotifierProvider.value(
           value: ProfileProv(),
         ),
         ChangeNotifierProvider.value(

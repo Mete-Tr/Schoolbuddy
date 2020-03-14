@@ -14,13 +14,13 @@ class Notes extends Table {
 
 class Timetables extends Table {
   IntColumn get tId => integer()();
-  TextColumn get gender => text()();
-  TextColumn get lastname => text()();
-  TextColumn get subjectAcronym => text()();
-  TextColumn get room => text()();
-  BoolColumn get isCancelled => boolean()();
-  BoolColumn get isCanged => boolean()();
-  TextColumn get massage => text()();
+  TextColumn get gender => text().nullable()();
+  TextColumn get lastname => text().nullable()();
+  TextColumn get subjectAcronym => text().nullable()();
+  TextColumn get room => text().nullable()();
+  BoolColumn get isCancelled => boolean().withDefault(Constant(false))();
+  BoolColumn get isCanged => boolean().withDefault(Constant(false))();
+  TextColumn get massage => text().nullable()();
 
   @override
   Set<Column> get primaryKey => {tId};
@@ -100,12 +100,12 @@ class TimetableDao extends DatabaseAccessor<AppDatabase>
 
   TimetableDao(this.db) : super(db);
 
-  Future<List<Timetable>> getAlltimet() => select(timetables).get();
-  Stream<List<Timetable>> watchAllTimet() => select(timetables).watch();
-  Future insertTimet(Insertable<Timetable> timetable) =>
+  Future<List<Timetable>> getAllTimetable() => select(timetables).get();
+  Stream<List<Timetable>> watchAllTimetable() => select(timetables).watch();
+  Future insertTimetable(Insertable<Timetable> timetable) =>
       into(timetables).insert(timetable);
-  Future updateTimet(Insertable<Timetable> timetable) =>
+  Future updateTimetable(Insertable<Timetable> timetable) =>
       update(timetables).replace(timetable);
-  Future deleteTimet(Insertable<Timetable> timetable) =>
+  Future deleteTimetable(Insertable<Timetable> timetable) =>
       delete(timetables).delete(timetable);
 }

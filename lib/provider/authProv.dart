@@ -160,13 +160,40 @@ class AuthProv with ChangeNotifier {
   }
 
   Future<bool> getMyCoureses(BuildContext context) async {
-    //final dbTimetable = Provider.of<TimetableDao>(context);
+    final dbTimetable = Provider.of<TimetableDao>(context);
     final url = 'https://schoolbuddy.herokuapp.com/api/user/timetable';
+    int id = 0;
 
     final response = await http.get(url, headers: {
       'Authorization': 'token ' + _token,
     });
     final serverData = json.decode(response.body);
+    for (int i = 0; i < 10; i++) {
+      final tmp = serverData['${i + 1}'];
+      for (int j = 0; j < 5; j++) {
+        List list = tmp[j];
+        if (list == null || list.isEmpty) {
+          id++;
+          final timetable = TimetablesCompanion(
+              tId: Value(id),
+          );
+          dbTimetable.insertTimetable(timetable);
+        } else {
+          id++;
+          final timetable = TimetablesCompanion(
+              tId: Value(id),
+              gender: Value(list[1]),
+              lastname: Value(list[2]),
+              subjectAcronym: Value(list[3]),
+              room: Value(list[4]),
+              isCancelled: Value(list[5]),
+              isCanged: Value(list[6]),
+              massage: Value(list[7]));
+          dbTimetable.insertTimetable(timetable);
+        }
+      }
+    }
+
     return true;
   }
 
@@ -256,6 +283,7 @@ class AuthProv with ChangeNotifier {
     _expiryDate = null;
     _email = null;
     _klasse = null;
+    _seen = null;
     final prefs = await SharedPreferences.getInstance();
     prefs.clear();
     if (_authTimer != null) {

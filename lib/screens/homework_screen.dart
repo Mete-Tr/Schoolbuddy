@@ -11,39 +11,41 @@ class Homework extends StatefulWidget {
   @override
   _HomeworkState createState() => _HomeworkState();
 }
+
 bool show = true;
 
 class _HomeworkState extends State<Homework> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
-        appBar: AppBar(
-          title: Text('Hausaufgaben'),
-          elevation: 0,
-          actions: <Widget>[
-            Center(child: Text('alle zeigen')),
-            Switch(
-              value: show,
-              onChanged: (val) {
-                setState(() {
-                  show = val;
-                });
-              },
-              activeColor: Colors.white,
-            ),
-            IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(NewHMScreen.routhName);
-                })
-          ],
-        ),
-        drawer: AppDrawer(),
-        body: SafeArea(
-          minimum: EdgeInsets.only(left: 5, right: 5),
-          child: HomeworkList(),
-        ));
+      backgroundColor: Theme.of(context).primaryColor,
+      appBar: AppBar(
+        title: Text('Hausaufgaben'),
+        elevation: 0,
+        actions: <Widget>[
+          Center(child: Text('alle zeigen')),
+          Switch(
+            value: show,
+            onChanged: (val) {
+              setState(() {
+                show = val;
+              });
+            },
+            activeColor: Colors.white,
+          ),
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.of(context).pushNamed(NewHMScreen.routhName);
+              })
+        ],
+      ),
+      drawer: AppDrawer(),
+      body: SafeArea(
+        minimum: EdgeInsets.only(left: 5, right: 5),
+        child: HomeworkList(),
+      ),
+    );
   }
 }
 
@@ -60,7 +62,8 @@ class _HomeworkListState extends State<HomeworkList> {
     final hmProv = Provider.of<HomeworkProv>(context);
 
     return StreamBuilder(
-      stream: show == true ? dao.watchAllHomeworks() : dao.watchAllDoneHomeworks(),
+      stream:
+          show == true ? dao.watchAllHomeworks() : dao.watchAllDoneHomeworks(),
       builder: (context, AsyncSnapshot<List<HomeworkData>> snapshot) {
         final list = snapshot.data ?? List();
         return Container(
@@ -76,48 +79,49 @@ class _HomeworkListState extends State<HomeworkList> {
                   itemCount: list.length,
                   itemBuilder: (ctx, i) {
                     return Card(
-                        child: Container(
-                      padding: EdgeInsets.all(5),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  list[i].title,
-                                  style: TextStyle(fontSize: 25),
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  list[i].task,
-                                  style: TextStyle(fontSize: 22),
-                                )
-                              ],
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    list[i].title,
+                                    style: TextStyle(fontSize: 25),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    list[i].task,
+                                    style: TextStyle(fontSize: 22),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                              size: 28,
+                            IconButton(
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                                size: 28,
+                              ),
+                              onPressed: () {
+                                hmProv.deleteHomework(list[i], context);
+                              },
                             ),
-                            onPressed: () {
-                              hmProv.deleteHomework(list[i], context);
-                            },
-                          ),
-                          Checkbox(
-                            value: list[i].done,
-                            onChanged: (val) {
-                              setState(() {
-                                hmProv.updateHomework(
-                                    list[i].copyWith(done: val), context);
-                              });
-                            },
-                          ),
-                        ],
+                            Checkbox(
+                              value: list[i].done,
+                              onChanged: (val) {
+                                setState(() {
+                                  hmProv.updateHomework(
+                                      list[i].copyWith(done: val), context);
+                                });
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ));
+                    );
                   },
                 ),
         );
