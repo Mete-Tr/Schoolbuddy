@@ -40,10 +40,12 @@ class _LessonState extends State<Lesson> {
     return StreamBuilder(
       stream: dao.watchAllTimetable(),
       builder: (context, AsyncSnapshot<List<Timetable>> snapshot) {
+        final list = snapshot.data ?? List();
         return Card(
               child: Padding(
                 padding: EdgeInsets.all(5),
                 child: GridView.builder(
+                  itemCount: list.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 5,
                       childAspectRatio: 1,
