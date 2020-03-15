@@ -12,7 +12,6 @@ class TimetableScreen extends StatefulWidget {
 class _TimetableScreenState extends State<TimetableScreen> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -30,23 +29,18 @@ class _TimetableScreenState extends State<TimetableScreen> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(left: 5),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        elevation: 8,
-                        child: Container(
-                          height: 65,
-                          width: 65,
-                          child: Center(
-                            child: Text('Montag'),
-                          ),
-                        ),
-                      ),
-                    )
+                    day('Montag'),
+                    day('Dienstag'),
+                    day('Mittwoch'),
+                    day('Donnerstag'),
+                    day('Freitag'),
                   ],
+                ),
+                Divider(
+                  color: Colors.black,
+                  indent: 10,
+                  endIndent: 10,
+                  thickness: 2,
                 ),
                 Expanded(
                   child: Lesson(),
@@ -54,6 +48,28 @@ class _TimetableScreenState extends State<TimetableScreen> {
               ],
             ),
           )),
+    );
+  }
+
+  Padding day(String day) {
+    return Padding(
+      padding: EdgeInsets.only(left: 5),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 8,
+        child: Container(
+          height: 65,
+          width: 65,
+          child: Center(
+            child: Text(
+              day,
+              style: TextStyle(fontSize: 12.5),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -88,7 +104,9 @@ class _LessonState extends State<Lesson> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       color: Colors.grey[400],
-                      child: Center(child: Text('frei')),
+                      child: Center(
+                        child: Text(list[i].massage),
+                      ),
                     )
                   : Card(
                       elevation: 8,
@@ -101,7 +119,7 @@ class _LessonState extends State<Lesson> {
                         children: <Widget>[
                           Text(list[i].subjectAcronym),
                           Text(
-                            'Raum:' + list[i].room,
+                            'Raum: ' + list[i].room,
                             style: TextStyle(fontSize: 11),
                           ),
                         ],
