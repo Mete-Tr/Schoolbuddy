@@ -79,6 +79,9 @@ class _HomeworkListState extends State<HomeworkList> {
                   itemCount: list.length,
                   itemBuilder: (ctx, i) {
                     return Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                       child: Container(
                         padding: EdgeInsets.all(5),
                         child: Row(

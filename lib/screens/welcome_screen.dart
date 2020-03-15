@@ -31,6 +31,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               height: 270,
               width: double.infinity,
               child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
                 elevation: 10,
                 child: FutureBuilder(
                   future: Provider.of<ProfileProv>(context).getUserData(),
@@ -58,6 +61,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             Expanded(
               child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
                 child: data.isEmpty
                     ? Center(
                         child: Text(

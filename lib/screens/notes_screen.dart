@@ -115,6 +115,9 @@ class _NotesListState extends State<NotesList> {
                         noteProv.deleteNote(list[i], list[i].nId, context);
                       },
                       child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                         elevation: 8,
                         child: Container(
                           width: double.infinity,

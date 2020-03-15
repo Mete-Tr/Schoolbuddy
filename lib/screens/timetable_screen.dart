@@ -22,8 +22,38 @@ class _TimetableScreenState extends State<TimetableScreen> {
       drawer: AppDrawer(),
       body: SafeArea(
           minimum: EdgeInsets.only(left: 5, right: 5),
-          child: Lesson(),
-          ),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 5),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        elevation: 8,
+                        child: Container(
+                          height: 65,
+                          width: 65,
+                          child: Center(
+                            child: Text('Montag'),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Expanded(
+                  child: Lesson(),
+                )
+              ],
+            ),
+          )),
     );
   }
 }
@@ -41,23 +71,43 @@ class _LessonState extends State<Lesson> {
       stream: dao.watchAllTimetable(),
       builder: (context, AsyncSnapshot<List<Timetable>> snapshot) {
         final list = snapshot.data ?? List();
-        return Card(
-              child: Padding(
-                padding: EdgeInsets.all(5),
-                child: GridView.builder(
-                  itemCount: list.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 5,
-                      childAspectRatio: 1,
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 5),
-                  itemBuilder: (ctx, i) => Container(
-                    color: Colors.red,
-                    child: Text('$i'),
-                  ),
-                ),
+        return Padding(
+          padding: EdgeInsets.all(5),
+          child: GridView.builder(
+              itemCount: list.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 5,
+                childAspectRatio: 1,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 5,
               ),
-            );
+              itemBuilder: (ctx, i) => list[i].isCancelled == true
+                  ? Card(
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      color: Colors.grey[400],
+                      child: Center(child: Text('frei')),
+                    )
+                  : Card(
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(list[i].subjectAcronym),
+                          Text(
+                            'Raum:' + list[i].room,
+                            style: TextStyle(fontSize: 11),
+                          ),
+                        ],
+                      ),
+                    )),
+        );
       },
     );
   }

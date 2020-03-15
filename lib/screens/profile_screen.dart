@@ -60,6 +60,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: <Widget>[
                     Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                       elevation: 10,
                       child: Container(
                         padding: EdgeInsets.all(10),

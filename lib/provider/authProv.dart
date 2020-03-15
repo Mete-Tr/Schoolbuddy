@@ -179,7 +179,7 @@ class AuthProv with ChangeNotifier {
               gender: Value('frei'),
               lastname: Value('frei'),
               subjectAcronym: Value('frei'),
-              isCancelled: Value(false),
+              isCancelled: Value(true),
               isCanged: Value(false),
               room: Value('frei'),
               massage: Value('frei'),

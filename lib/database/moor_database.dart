@@ -14,13 +14,13 @@ class Notes extends Table {
 
 class Timetables extends Table {
   IntColumn get tId => integer()();
-  TextColumn get gender => text().nullable()();
-  TextColumn get lastname => text().nullable()();
-  TextColumn get subjectAcronym => text().nullable()();
-  TextColumn get room => text().nullable()();
+  TextColumn get gender => text()();
+  TextColumn get lastname => text()();
+  TextColumn get subjectAcronym => text()();
+  TextColumn get room => text()();
   BoolColumn get isCancelled => boolean().withDefault(Constant(false))();
   BoolColumn get isCanged => boolean().withDefault(Constant(false))();
-  TextColumn get massage => text().nullable()();
+  TextColumn get massage => text()();
 
   @override
   Set<Column> get primaryKey => {tId};

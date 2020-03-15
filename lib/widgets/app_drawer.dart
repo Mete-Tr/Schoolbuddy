@@ -21,6 +21,9 @@ class AppDrawer extends StatelessWidget with ChangeNotifier {
               automaticallyImplyLeading: false,
             ),
             Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               child: ListTile(
                 leading: Icon(Icons.home),
                 title: Text('Willkommen'),
@@ -32,6 +35,9 @@ class AppDrawer extends StatelessWidget with ChangeNotifier {
             ),
             Divider(height: 5),
             Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               child: ListTile(
                 leading: Icon(Icons.person),
                 title: Text('Dein Profil'),
@@ -43,6 +49,9 @@ class AppDrawer extends StatelessWidget with ChangeNotifier {
             ),
             Divider(height: 5),
             Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               child: ListTile(
                 leading: Icon(Icons.table_chart),
                 title: Text('Stundenplan'),
@@ -54,6 +63,9 @@ class AppDrawer extends StatelessWidget with ChangeNotifier {
             ),
             Divider(height: 5),
             Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               child: ListTile(
                 leading: Icon(Icons.done),
                 title: Text('Hausaufgaben'),
@@ -65,6 +77,9 @@ class AppDrawer extends StatelessWidget with ChangeNotifier {
             ),
             Divider(height: 5),
             Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               child: ListTile(
                 leading: Icon(Icons.note),
                 title: Text('Notizen'),
@@ -76,6 +91,9 @@ class AppDrawer extends StatelessWidget with ChangeNotifier {
             ),
             Divider(height: 5),
             Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               child: ListTile(
                 leading: Icon(Icons.exit_to_app),
                 title: Text('Ausloggen'),
