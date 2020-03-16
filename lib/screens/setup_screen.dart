@@ -32,6 +32,9 @@ class _SetupScreenState extends State<SetupScreen> {
       body: SafeArea(
         minimum: EdgeInsets.only(left: 5, right: 5),
         child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           elevation: 10,
           child: Container(
             padding: EdgeInsets.only(top: 7),

@@ -21,6 +21,7 @@ class Timetables extends Table {
   BoolColumn get isCancelled => boolean().withDefault(Constant(false))();
   BoolColumn get isCanged => boolean().withDefault(Constant(false))();
   TextColumn get massage => text()();
+  TextColumn get color => text()();
 
   @override
   Set<Column> get primaryKey => {tId};

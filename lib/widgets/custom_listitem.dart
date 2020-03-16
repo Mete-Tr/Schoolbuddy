@@ -28,6 +28,9 @@ class _CustomListitemState extends State<CustomListitem> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
       elevation: 8,
       child: Container(
         padding: EdgeInsets.only(top: 8, bottom: 8, right: 8),
@@ -35,6 +38,9 @@ class _CustomListitemState extends State<CustomListitem> {
         child: Row(
           children: <Widget>[
             Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               child: Container(
                 width: 30,
                 height: 80,

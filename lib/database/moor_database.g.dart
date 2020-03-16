@@ -218,6 +218,7 @@ class Timetable extends DataClass implements Insertable<Timetable> {
   final bool isCancelled;
   final bool isCanged;
   final String massage;
+  final String color;
   Timetable(
       {@required this.tId,
       @required this.gender,
@@ -226,7 +227,8 @@ class Timetable extends DataClass implements Insertable<Timetable> {
       @required this.room,
       @required this.isCancelled,
       @required this.isCanged,
-      @required this.massage});
+      @required this.massage,
+      @required this.color});
   factory Timetable.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -248,6 +250,8 @@ class Timetable extends DataClass implements Insertable<Timetable> {
           boolType.mapFromDatabaseResponse(data['${effectivePrefix}is_canged']),
       massage:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}massage']),
+      color:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}color']),
     );
   }
   factory Timetable.fromJson(Map<String, dynamic> json,
@@ -261,6 +265,7 @@ class Timetable extends DataClass implements Insertable<Timetable> {
       isCancelled: serializer.fromJson<bool>(json['isCancelled']),
       isCanged: serializer.fromJson<bool>(json['isCanged']),
       massage: serializer.fromJson<String>(json['massage']),
+      color: serializer.fromJson<String>(json['color']),
     );
   }
   @override
@@ -275,6 +280,7 @@ class Timetable extends DataClass implements Insertable<Timetable> {
       'isCancelled': serializer.toJson<bool>(isCancelled),
       'isCanged': serializer.toJson<bool>(isCanged),
       'massage': serializer.toJson<String>(massage),
+      'color': serializer.toJson<String>(color),
     };
   }
 
@@ -300,6 +306,8 @@ class Timetable extends DataClass implements Insertable<Timetable> {
       massage: massage == null && nullToAbsent
           ? const Value.absent()
           : Value(massage),
+      color:
+          color == null && nullToAbsent ? const Value.absent() : Value(color),
     );
   }
 
@@ -311,7 +319,8 @@ class Timetable extends DataClass implements Insertable<Timetable> {
           String room,
           bool isCancelled,
           bool isCanged,
-          String massage}) =>
+          String massage,
+          String color}) =>
       Timetable(
         tId: tId ?? this.tId,
         gender: gender ?? this.gender,
@@ -321,6 +330,7 @@ class Timetable extends DataClass implements Insertable<Timetable> {
         isCancelled: isCancelled ?? this.isCancelled,
         isCanged: isCanged ?? this.isCanged,
         massage: massage ?? this.massage,
+        color: color ?? this.color,
       );
   @override
   String toString() {
@@ -332,7 +342,8 @@ class Timetable extends DataClass implements Insertable<Timetable> {
           ..write('room: $room, ')
           ..write('isCancelled: $isCancelled, ')
           ..write('isCanged: $isCanged, ')
-          ..write('massage: $massage')
+          ..write('massage: $massage, ')
+          ..write('color: $color')
           ..write(')'))
         .toString();
   }
@@ -348,8 +359,10 @@ class Timetable extends DataClass implements Insertable<Timetable> {
                   subjectAcronym.hashCode,
                   $mrjc(
                       room.hashCode,
-                      $mrjc(isCancelled.hashCode,
-                          $mrjc(isCanged.hashCode, massage.hashCode))))))));
+                      $mrjc(
+                          isCancelled.hashCode,
+                          $mrjc(isCanged.hashCode,
+                              $mrjc(massage.hashCode, color.hashCode)))))))));
   @override
   bool operator ==(other) =>
       identical(this, other) ||
@@ -361,7 +374,8 @@ class Timetable extends DataClass implements Insertable<Timetable> {
           other.room == this.room &&
           other.isCancelled == this.isCancelled &&
           other.isCanged == this.isCanged &&
-          other.massage == this.massage);
+          other.massage == this.massage &&
+          other.color == this.color);
 }
 
 class TimetablesCompanion extends UpdateCompanion<Timetable> {
@@ -373,6 +387,7 @@ class TimetablesCompanion extends UpdateCompanion<Timetable> {
   final Value<bool> isCancelled;
   final Value<bool> isCanged;
   final Value<String> massage;
+  final Value<String> color;
   const TimetablesCompanion({
     this.tId = const Value.absent(),
     this.gender = const Value.absent(),
@@ -382,6 +397,7 @@ class TimetablesCompanion extends UpdateCompanion<Timetable> {
     this.isCancelled = const Value.absent(),
     this.isCanged = const Value.absent(),
     this.massage = const Value.absent(),
+    this.color = const Value.absent(),
   });
   TimetablesCompanion.insert({
     @required int tId,
@@ -389,17 +405,17 @@ class TimetablesCompanion extends UpdateCompanion<Timetable> {
     @required String lastname,
     @required String subjectAcronym,
     @required String room,
-    @required bool isCancelled,
-    @required bool isCanged,
+    this.isCancelled = const Value.absent(),
+    this.isCanged = const Value.absent(),
     @required String massage,
+    @required String color,
   })  : tId = Value(tId),
         gender = Value(gender),
         lastname = Value(lastname),
         subjectAcronym = Value(subjectAcronym),
         room = Value(room),
-        isCancelled = Value(isCancelled),
-        isCanged = Value(isCanged),
-        massage = Value(massage);
+        massage = Value(massage),
+        color = Value(color);
   TimetablesCompanion copyWith(
       {Value<int> tId,
       Value<String> gender,
@@ -408,7 +424,8 @@ class TimetablesCompanion extends UpdateCompanion<Timetable> {
       Value<String> room,
       Value<bool> isCancelled,
       Value<bool> isCanged,
-      Value<String> massage}) {
+      Value<String> massage,
+      Value<String> color}) {
     return TimetablesCompanion(
       tId: tId ?? this.tId,
       gender: gender ?? this.gender,
@@ -418,6 +435,7 @@ class TimetablesCompanion extends UpdateCompanion<Timetable> {
       isCancelled: isCancelled ?? this.isCancelled,
       isCanged: isCanged ?? this.isCanged,
       massage: massage ?? this.massage,
+      color: color ?? this.color,
     );
   }
 }
@@ -496,11 +514,8 @@ class $TimetablesTable extends Timetables
   GeneratedBoolColumn get isCancelled =>
       _isCancelled ??= _constructIsCancelled();
   GeneratedBoolColumn _constructIsCancelled() {
-    return GeneratedBoolColumn(
-      'is_cancelled',
-      $tableName,
-      false,
-    );
+    return GeneratedBoolColumn('is_cancelled', $tableName, false,
+        defaultValue: Constant(false));
   }
 
   final VerificationMeta _isCangedMeta = const VerificationMeta('isCanged');
@@ -508,11 +523,8 @@ class $TimetablesTable extends Timetables
   @override
   GeneratedBoolColumn get isCanged => _isCanged ??= _constructIsCanged();
   GeneratedBoolColumn _constructIsCanged() {
-    return GeneratedBoolColumn(
-      'is_canged',
-      $tableName,
-      false,
-    );
+    return GeneratedBoolColumn('is_canged', $tableName, false,
+        defaultValue: Constant(false));
   }
 
   final VerificationMeta _massageMeta = const VerificationMeta('massage');
@@ -527,6 +539,18 @@ class $TimetablesTable extends Timetables
     );
   }
 
+  final VerificationMeta _colorMeta = const VerificationMeta('color');
+  GeneratedTextColumn _color;
+  @override
+  GeneratedTextColumn get color => _color ??= _constructColor();
+  GeneratedTextColumn _constructColor() {
+    return GeneratedTextColumn(
+      'color',
+      $tableName,
+      false,
+    );
+  }
+
   @override
   List<GeneratedColumn> get $columns => [
         tId,
@@ -536,7 +560,8 @@ class $TimetablesTable extends Timetables
         room,
         isCancelled,
         isCanged,
-        massage
+        massage,
+        color
       ];
   @override
   $TimetablesTable get asDslTable => this;
@@ -597,6 +622,12 @@ class $TimetablesTable extends Timetables
     } else if (massage.isRequired && isInserting) {
       context.missing(_massageMeta);
     }
+    if (d.color.present) {
+      context.handle(
+          _colorMeta, color.isAcceptableValue(d.color.value, _colorMeta));
+    } else if (color.isRequired && isInserting) {
+      context.missing(_colorMeta);
+    }
     return context;
   }
 
@@ -636,6 +667,9 @@ class $TimetablesTable extends Timetables
     if (d.massage.present) {
       map['massage'] = Variable<String, StringType>(d.massage.value);
     }
+    if (d.color.present) {
+      map['color'] = Variable<String, StringType>(d.color.value);
+    }
     return map;
   }
 
@@ -650,23 +684,28 @@ class HomeworkData extends DataClass implements Insertable<HomeworkData> {
   final String title;
   final String task;
   final bool done;
+  final DateTime date;
   HomeworkData(
       {@required this.hId,
       @required this.title,
       @required this.task,
-      @required this.done});
+      @required this.done,
+      @required this.date});
   factory HomeworkData.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
     final boolType = db.typeSystem.forDartType<bool>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
     return HomeworkData(
       hId: intType.mapFromDatabaseResponse(data['${effectivePrefix}h_id']),
       title:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}title']),
       task: stringType.mapFromDatabaseResponse(data['${effectivePrefix}task']),
       done: boolType.mapFromDatabaseResponse(data['${effectivePrefix}done']),
+      date:
+          dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}date']),
     );
   }
   factory HomeworkData.fromJson(Map<String, dynamic> json,
@@ -676,6 +715,7 @@ class HomeworkData extends DataClass implements Insertable<HomeworkData> {
       title: serializer.fromJson<String>(json['title']),
       task: serializer.fromJson<String>(json['task']),
       done: serializer.fromJson<bool>(json['done']),
+      date: serializer.fromJson<DateTime>(json['date']),
     );
   }
   @override
@@ -686,6 +726,7 @@ class HomeworkData extends DataClass implements Insertable<HomeworkData> {
       'title': serializer.toJson<String>(title),
       'task': serializer.toJson<String>(task),
       'done': serializer.toJson<bool>(done),
+      'date': serializer.toJson<DateTime>(date),
     };
   }
 
@@ -697,15 +738,18 @@ class HomeworkData extends DataClass implements Insertable<HomeworkData> {
           title == null && nullToAbsent ? const Value.absent() : Value(title),
       task: task == null && nullToAbsent ? const Value.absent() : Value(task),
       done: done == null && nullToAbsent ? const Value.absent() : Value(done),
+      date: date == null && nullToAbsent ? const Value.absent() : Value(date),
     );
   }
 
-  HomeworkData copyWith({int hId, String title, String task, bool done}) =>
+  HomeworkData copyWith(
+          {int hId, String title, String task, bool done, DateTime date}) =>
       HomeworkData(
         hId: hId ?? this.hId,
         title: title ?? this.title,
         task: task ?? this.task,
         done: done ?? this.done,
+        date: date ?? this.date,
       );
   @override
   String toString() {
@@ -713,14 +757,17 @@ class HomeworkData extends DataClass implements Insertable<HomeworkData> {
           ..write('hId: $hId, ')
           ..write('title: $title, ')
           ..write('task: $task, ')
-          ..write('done: $done')
+          ..write('done: $done, ')
+          ..write('date: $date')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(hId.hashCode,
-      $mrjc(title.hashCode, $mrjc(task.hashCode, done.hashCode))));
+  int get hashCode => $mrjf($mrjc(
+      hId.hashCode,
+      $mrjc(title.hashCode,
+          $mrjc(task.hashCode, $mrjc(done.hashCode, date.hashCode)))));
   @override
   bool operator ==(other) =>
       identical(this, other) ||
@@ -728,7 +775,8 @@ class HomeworkData extends DataClass implements Insertable<HomeworkData> {
           other.hId == this.hId &&
           other.title == this.title &&
           other.task == this.task &&
-          other.done == this.done);
+          other.done == this.done &&
+          other.date == this.date);
 }
 
 class HomeworkDatasCompanion extends UpdateCompanion<HomeworkData> {
@@ -736,29 +784,34 @@ class HomeworkDatasCompanion extends UpdateCompanion<HomeworkData> {
   final Value<String> title;
   final Value<String> task;
   final Value<bool> done;
+  final Value<DateTime> date;
   const HomeworkDatasCompanion({
     this.hId = const Value.absent(),
     this.title = const Value.absent(),
     this.task = const Value.absent(),
     this.done = const Value.absent(),
+    this.date = const Value.absent(),
   });
   HomeworkDatasCompanion.insert({
     this.hId = const Value.absent(),
     @required String title,
     @required String task,
     this.done = const Value.absent(),
+    this.date = const Value.absent(),
   })  : title = Value(title),
         task = Value(task);
   HomeworkDatasCompanion copyWith(
       {Value<int> hId,
       Value<String> title,
       Value<String> task,
-      Value<bool> done}) {
+      Value<bool> done,
+      Value<DateTime> date}) {
     return HomeworkDatasCompanion(
       hId: hId ?? this.hId,
       title: title ?? this.title,
       task: task ?? this.task,
       done: done ?? this.done,
+      date: date ?? this.date,
     );
   }
 }
@@ -810,8 +863,17 @@ class $HomeworkDatasTable extends HomeworkDatas
         defaultValue: Constant(false));
   }
 
+  final VerificationMeta _dateMeta = const VerificationMeta('date');
+  GeneratedDateTimeColumn _date;
   @override
-  List<GeneratedColumn> get $columns => [hId, title, task, done];
+  GeneratedDateTimeColumn get date => _date ??= _constructDate();
+  GeneratedDateTimeColumn _constructDate() {
+    return GeneratedDateTimeColumn('date', $tableName, false,
+        defaultValue: Constant(DateTime.now()));
+  }
+
+  @override
+  List<GeneratedColumn> get $columns => [hId, title, task, done, date];
   @override
   $HomeworkDatasTable get asDslTable => this;
   @override
@@ -845,6 +907,12 @@ class $HomeworkDatasTable extends HomeworkDatas
     } else if (done.isRequired && isInserting) {
       context.missing(_doneMeta);
     }
+    if (d.date.present) {
+      context.handle(
+          _dateMeta, date.isAcceptableValue(d.date.value, _dateMeta));
+    } else if (date.isRequired && isInserting) {
+      context.missing(_dateMeta);
+    }
     return context;
   }
 
@@ -870,6 +938,9 @@ class $HomeworkDatasTable extends HomeworkDatas
     }
     if (d.done.present) {
       map['done'] = Variable<bool, BoolType>(d.done.value);
+    }
+    if (d.date.present) {
+      map['date'] = Variable<DateTime, DateTimeType>(d.date.value);
     }
     return map;
   }

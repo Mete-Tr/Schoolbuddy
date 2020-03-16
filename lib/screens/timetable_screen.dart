@@ -109,6 +109,9 @@ class _LessonState extends State<Lesson> {
                       ),
                     )
                   : Card(
+                      color: Color(
+                        int.parse(list[i].color),
+                      ),
                       elevation: 8,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),

@@ -163,6 +163,7 @@ class AuthProv with ChangeNotifier {
     final dbTimetable = Provider.of<TimetableDao>(context);
     final url = 'https://schoolbuddy.herokuapp.com/api/user/timetable';
     int id = 0;
+    String col;
 
     final response = await http.get(url, headers: {
       'Authorization': 'token ' + _token,
@@ -175,27 +176,31 @@ class AuthProv with ChangeNotifier {
         if (list == null || list.isEmpty) {
           id++;
           final timetable = TimetablesCompanion(
-              tId: Value(id),
-              gender: Value('frei'),
-              lastname: Value('frei'),
-              subjectAcronym: Value('frei'),
-              isCancelled: Value(true),
-              isCanged: Value(false),
-              room: Value('frei'),
-              massage: Value('frei'),
+            tId: Value(id),
+            gender: Value('frei'),
+            lastname: Value('frei'),
+            subjectAcronym: Value('frei'),
+            isCancelled: Value(true),
+            isCanged: Value(false),
+            room: Value('frei'),
+            massage: Value('frei'),
+            color: Value('frei'),
           );
           dbTimetable.insertTimetable(timetable);
         } else {
+          col = '0xff' + list[8].replaceFirst('#', '');
           id++;
           final timetable = TimetablesCompanion(
-              tId: Value(id),
-              gender: Value(list[1]),
-              lastname: Value(list[2]),
-              subjectAcronym: Value(list[3]),
-              room: Value(list[4]),
-              isCancelled: Value(list[5]),
-              isCanged: Value(list[6]),
-              massage: Value(list[7]));
+            tId: Value(id),
+            gender: Value(list[1]),
+            lastname: Value(list[2]),
+            subjectAcronym: Value(list[3]),
+            room: Value(list[4]),
+            isCancelled: Value(list[5]),
+            isCanged: Value(list[6]),
+            massage: Value(list[7]),
+            color: Value(col)
+          );
           dbTimetable.insertTimetable(timetable);
         }
         print(id);
