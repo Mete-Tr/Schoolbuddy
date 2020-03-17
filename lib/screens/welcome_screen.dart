@@ -28,7 +28,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         child: Column(
           children: <Widget>[
             Container(
-              height: 270,
+              height: 250,
               width: double.infinity,
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -74,13 +74,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         itemCount: data.length,
                         itemBuilder: (BuildContext context, int i) {
                           return Card(
-                              // color: data[i].color,
-                              // margin: EdgeInsets.only(top: 10, left: 5, right: 5),
-                              // child: ListTile(
-                              //   leading: Text('${data[i].shortcut}'),
-                              //   title: Text('Lehrer: ${data[i].teacher}'),
-                              //   trailing: Text('Raum: ${data[i].room}'),
-                              // ),
+                              
                               );
                         },
                       ),
