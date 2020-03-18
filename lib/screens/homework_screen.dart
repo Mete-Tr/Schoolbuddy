@@ -12,7 +12,7 @@ class Homework extends StatefulWidget {
   _HomeworkState createState() => _HomeworkState();
 }
 
-bool show = true;
+bool show = false;
 
 class _HomeworkState extends State<Homework> {
   @override

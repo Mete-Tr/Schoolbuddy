@@ -68,7 +68,7 @@ class HomeworkDataDao extends DatabaseAccessor<AppDatabase>
     ..orderBy([
       (t) => OrderingTerm(expression: t.hId, mode: OrderingMode.desc)
     ])
-    ..where((t) => t.done.equals(true))).watch();
+    ..where((t) => t.done.equals(false))).watch();
   }
   Future insertHomework(Insertable<HomeworkData> homeworkData) => into(homeworkDatas).insert(homeworkData);
   Future updateHomework(Insertable<HomeworkData> homeworkData) => update(homeworkDatas).replace(homeworkData);
