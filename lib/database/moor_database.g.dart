@@ -212,6 +212,7 @@ class $NotesTable extends Notes with TableInfo<$NotesTable, Note> {
 class Timetable extends DataClass implements Insertable<Timetable> {
   final int tId;
   final String lastname;
+  final String gender;
   final String subjectAcronym;
   final String room;
   final bool isCancelled;
@@ -222,6 +223,7 @@ class Timetable extends DataClass implements Insertable<Timetable> {
   Timetable(
       {@required this.tId,
       @required this.lastname,
+      @required this.gender,
       @required this.subjectAcronym,
       @required this.room,
       @required this.isCancelled,
@@ -239,6 +241,8 @@ class Timetable extends DataClass implements Insertable<Timetable> {
       tId: intType.mapFromDatabaseResponse(data['${effectivePrefix}t_id']),
       lastname: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}lastname']),
+      gender:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}gender']),
       subjectAcronym: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}subject_acronym']),
       room: stringType.mapFromDatabaseResponse(data['${effectivePrefix}room']),
@@ -259,6 +263,7 @@ class Timetable extends DataClass implements Insertable<Timetable> {
     return Timetable(
       tId: serializer.fromJson<int>(json['tId']),
       lastname: serializer.fromJson<String>(json['lastname']),
+      gender: serializer.fromJson<String>(json['gender']),
       subjectAcronym: serializer.fromJson<String>(json['subjectAcronym']),
       room: serializer.fromJson<String>(json['room']),
       isCancelled: serializer.fromJson<bool>(json['isCancelled']),
@@ -274,6 +279,7 @@ class Timetable extends DataClass implements Insertable<Timetable> {
     return {
       'tId': serializer.toJson<int>(tId),
       'lastname': serializer.toJson<String>(lastname),
+      'gender': serializer.toJson<String>(gender),
       'subjectAcronym': serializer.toJson<String>(subjectAcronym),
       'room': serializer.toJson<String>(room),
       'isCancelled': serializer.toJson<bool>(isCancelled),
@@ -291,6 +297,8 @@ class Timetable extends DataClass implements Insertable<Timetable> {
       lastname: lastname == null && nullToAbsent
           ? const Value.absent()
           : Value(lastname),
+      gender:
+          gender == null && nullToAbsent ? const Value.absent() : Value(gender),
       subjectAcronym: subjectAcronym == null && nullToAbsent
           ? const Value.absent()
           : Value(subjectAcronym),
@@ -315,6 +323,7 @@ class Timetable extends DataClass implements Insertable<Timetable> {
   Timetable copyWith(
           {int tId,
           String lastname,
+          String gender,
           String subjectAcronym,
           String room,
           bool isCancelled,
@@ -325,6 +334,7 @@ class Timetable extends DataClass implements Insertable<Timetable> {
       Timetable(
         tId: tId ?? this.tId,
         lastname: lastname ?? this.lastname,
+        gender: gender ?? this.gender,
         subjectAcronym: subjectAcronym ?? this.subjectAcronym,
         room: room ?? this.room,
         isCancelled: isCancelled ?? this.isCancelled,
@@ -338,6 +348,7 @@ class Timetable extends DataClass implements Insertable<Timetable> {
     return (StringBuffer('Timetable(')
           ..write('tId: $tId, ')
           ..write('lastname: $lastname, ')
+          ..write('gender: $gender, ')
           ..write('subjectAcronym: $subjectAcronym, ')
           ..write('room: $room, ')
           ..write('isCancelled: $isCancelled, ')
@@ -355,21 +366,26 @@ class Timetable extends DataClass implements Insertable<Timetable> {
       $mrjc(
           lastname.hashCode,
           $mrjc(
-              subjectAcronym.hashCode,
+              gender.hashCode,
               $mrjc(
-                  room.hashCode,
+                  subjectAcronym.hashCode,
                   $mrjc(
-                      isCancelled.hashCode,
+                      room.hashCode,
                       $mrjc(
-                          isCanged.hashCode,
-                          $mrjc(massage.hashCode,
-                              $mrjc(color.hashCode, courseDay.hashCode)))))))));
+                          isCancelled.hashCode,
+                          $mrjc(
+                              isCanged.hashCode,
+                              $mrjc(
+                                  massage.hashCode,
+                                  $mrjc(color.hashCode,
+                                      courseDay.hashCode))))))))));
   @override
   bool operator ==(other) =>
       identical(this, other) ||
       (other is Timetable &&
           other.tId == this.tId &&
           other.lastname == this.lastname &&
+          other.gender == this.gender &&
           other.subjectAcronym == this.subjectAcronym &&
           other.room == this.room &&
           other.isCancelled == this.isCancelled &&
@@ -382,6 +398,7 @@ class Timetable extends DataClass implements Insertable<Timetable> {
 class TimetablesCompanion extends UpdateCompanion<Timetable> {
   final Value<int> tId;
   final Value<String> lastname;
+  final Value<String> gender;
   final Value<String> subjectAcronym;
   final Value<String> room;
   final Value<bool> isCancelled;
@@ -392,6 +409,7 @@ class TimetablesCompanion extends UpdateCompanion<Timetable> {
   const TimetablesCompanion({
     this.tId = const Value.absent(),
     this.lastname = const Value.absent(),
+    this.gender = const Value.absent(),
     this.subjectAcronym = const Value.absent(),
     this.room = const Value.absent(),
     this.isCancelled = const Value.absent(),
@@ -403,6 +421,7 @@ class TimetablesCompanion extends UpdateCompanion<Timetable> {
   TimetablesCompanion.insert({
     @required int tId,
     @required String lastname,
+    @required String gender,
     @required String subjectAcronym,
     @required String room,
     this.isCancelled = const Value.absent(),
@@ -412,6 +431,7 @@ class TimetablesCompanion extends UpdateCompanion<Timetable> {
     @required String courseDay,
   })  : tId = Value(tId),
         lastname = Value(lastname),
+        gender = Value(gender),
         subjectAcronym = Value(subjectAcronym),
         room = Value(room),
         massage = Value(massage),
@@ -420,6 +440,7 @@ class TimetablesCompanion extends UpdateCompanion<Timetable> {
   TimetablesCompanion copyWith(
       {Value<int> tId,
       Value<String> lastname,
+      Value<String> gender,
       Value<String> subjectAcronym,
       Value<String> room,
       Value<bool> isCancelled,
@@ -430,6 +451,7 @@ class TimetablesCompanion extends UpdateCompanion<Timetable> {
     return TimetablesCompanion(
       tId: tId ?? this.tId,
       lastname: lastname ?? this.lastname,
+      gender: gender ?? this.gender,
       subjectAcronym: subjectAcronym ?? this.subjectAcronym,
       room: room ?? this.room,
       isCancelled: isCancelled ?? this.isCancelled,
@@ -465,6 +487,18 @@ class $TimetablesTable extends Timetables
   GeneratedTextColumn _constructLastname() {
     return GeneratedTextColumn(
       'lastname',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _genderMeta = const VerificationMeta('gender');
+  GeneratedTextColumn _gender;
+  @override
+  GeneratedTextColumn get gender => _gender ??= _constructGender();
+  GeneratedTextColumn _constructGender() {
+    return GeneratedTextColumn(
+      'gender',
       $tableName,
       false,
     );
@@ -556,6 +590,7 @@ class $TimetablesTable extends Timetables
   List<GeneratedColumn> get $columns => [
         tId,
         lastname,
+        gender,
         subjectAcronym,
         room,
         isCancelled,
@@ -584,6 +619,12 @@ class $TimetablesTable extends Timetables
           lastname.isAcceptableValue(d.lastname.value, _lastnameMeta));
     } else if (lastname.isRequired && isInserting) {
       context.missing(_lastnameMeta);
+    }
+    if (d.gender.present) {
+      context.handle(
+          _genderMeta, gender.isAcceptableValue(d.gender.value, _genderMeta));
+    } else if (gender.isRequired && isInserting) {
+      context.missing(_genderMeta);
     }
     if (d.subjectAcronym.present) {
       context.handle(
@@ -648,6 +689,9 @@ class $TimetablesTable extends Timetables
     }
     if (d.lastname.present) {
       map['lastname'] = Variable<String, StringType>(d.lastname.value);
+    }
+    if (d.gender.present) {
+      map['gender'] = Variable<String, StringType>(d.gender.value);
     }
     if (d.subjectAcronym.present) {
       map['subject_acronym'] =

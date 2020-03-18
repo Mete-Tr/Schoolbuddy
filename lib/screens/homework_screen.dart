@@ -63,7 +63,7 @@ class _HomeworkListState extends State<HomeworkList> {
 
     return StreamBuilder(
       stream:
-          show == true ? dao.watchAllHomeworks() : dao.watchAllDoneHomeworks(),
+          show == true ? dao.watchAllHomeworks() : dao.watchDoneHomeworks(),
       builder: (context, AsyncSnapshot<List<HomeworkData>> snapshot) {
         final list = snapshot.data ?? List();
         return Container(

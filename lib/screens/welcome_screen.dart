@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:x/database/moor_database.dart';
 import 'package:x/provider/profileProv.dart';
+import 'package:x/widgets/custom_listitem.dart';
 import '../models/subject.dart';
 import '../widgets/app_drawer.dart';
 
@@ -14,7 +16,10 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final dao = Provider.of<TimetableDao>(context);
     List<Subject> data = [];
+
+    int today = DateTime.now().weekday;
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
@@ -61,24 +66,50 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             Expanded(
               child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: data.isEmpty
-                    ? Center(
-                        child: Text(
-                          'Noch keine Daten vorhanden',
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: StreamBuilder(
+                    stream: dao.watchTimetableDay('MO'
+                        // today == 1
+                        //   ? 'MO'
+                        //   : today == 2
+                        //       ? 'DI'
+                        //       : today == 3
+                        //           ? 'MIT'
+                        //           : today == 4
+                        //               ? 'Do'
+                        //               : today == 5 ? 'FRI' : 'MO'
                         ),
-                      )
-                    : ListView.builder(
-                        itemCount: data.length,
-                        itemBuilder: (BuildContext context, int i) {
+                    builder:
+                        (context, AsyncSnapshot<List<Timetable>> snapshot) {
+                      final list = snapshot.data ?? List();
+                      print(list.length);
+                      return ListView.builder(
+                        itemCount: list.length,
+                        itemBuilder: (ctx, i) {
                           return Card(
-                              
-                              );
+                            child: Text(list[i].subjectAcronym)
+                          );
                         },
-                      ),
-              ),
+                      );
+                    },
+                  )
+                  //  data.isEmpty
+                  //     ? Center(
+                  //         child: Text(
+                  //           'Noch keine Daten vorhanden',
+                  //         ),
+                  //       )
+                  //     : ListView.builder(
+                  //         itemCount: data.length,
+                  //         itemBuilder: (BuildContext context, int i) {
+                  //           return Card(
+
+                  //               );
+                  //         },
+                  //       ),
+                  ),
             ),
           ],
         ),

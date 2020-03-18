@@ -15,6 +15,7 @@ class Notes extends Table {
 class Timetables extends Table {
   IntColumn get tId => integer()();
   TextColumn get lastname => text()();
+  TextColumn get gender => text()();
   TextColumn get subjectAcronym => text()();
   TextColumn get room => text()();
   BoolColumn get isCancelled => boolean().withDefault(Constant(false))();
@@ -63,7 +64,7 @@ class HomeworkDataDao extends DatabaseAccessor<AppDatabase>
       (t) => OrderingTerm(expression: t.hId, mode: OrderingMode.desc)
     ])).watch();
   }
-  Stream<List<HomeworkData>> watchAllDoneHomeworks() {
+  Stream<List<HomeworkData>> watchDoneHomeworks() {
     return (select(homeworkDatas)
     ..orderBy([
       (t) => OrderingTerm(expression: t.hId, mode: OrderingMode.desc)
@@ -103,6 +104,10 @@ class TimetableDao extends DatabaseAccessor<AppDatabase>
 
   Future<List<Timetable>> getAllTimetable() => select(timetables).get();
   Stream<List<Timetable>> watchAllTimetable() => select(timetables).watch();
+  Stream<List<Timetable>> watchTimetableDay(String today) {
+    return (select(timetables)
+    ..where((t) => t.courseDay.equals(today))).watch();
+  }
   Future insertTimetable(Insertable<Timetable> timetable) =>
       into(timetables).insert(timetable);
   Future updateTimetable(Insertable<Timetable> timetable) =>

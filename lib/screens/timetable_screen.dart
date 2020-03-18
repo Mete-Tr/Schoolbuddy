@@ -103,7 +103,9 @@ class _LessonState extends State<Lesson> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      color: Colors.grey[400],
+                      color: Color(
+                        int.parse(list[i].color),
+                      ),
                       child: Center(
                         child: Text(list[i].massage),
                       ),

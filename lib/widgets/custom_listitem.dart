@@ -14,8 +14,9 @@ class CustomListitem extends StatefulWidget {
 
   CustomListitem(this.subject, this.teacher, this.room, this.tmpColor, this.id,
       this.gender) {
-    col = '0xff' + tmpColor.replaceFirst('#', '');
-    color = Color(int.parse(col));
+      col = '0xff' + tmpColor.replaceFirst('#', '');
+      color = Color(int.parse(col));
+    
   }
 
   @override
