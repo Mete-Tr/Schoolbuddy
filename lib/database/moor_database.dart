@@ -14,7 +14,6 @@ class Notes extends Table {
 
 class Timetables extends Table {
   IntColumn get tId => integer()();
-  TextColumn get gender => text()();
   TextColumn get lastname => text()();
   TextColumn get subjectAcronym => text()();
   TextColumn get room => text()();
@@ -22,6 +21,7 @@ class Timetables extends Table {
   BoolColumn get isCanged => boolean().withDefault(Constant(false))();
   TextColumn get massage => text()();
   TextColumn get color => text()();
+  TextColumn get courseDay => text()();
 
   @override
   Set<Column> get primaryKey => {tId};

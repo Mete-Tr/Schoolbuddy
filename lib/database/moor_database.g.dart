@@ -211,7 +211,6 @@ class $NotesTable extends Notes with TableInfo<$NotesTable, Note> {
 
 class Timetable extends DataClass implements Insertable<Timetable> {
   final int tId;
-  final String gender;
   final String lastname;
   final String subjectAcronym;
   final String room;
@@ -219,16 +218,17 @@ class Timetable extends DataClass implements Insertable<Timetable> {
   final bool isCanged;
   final String massage;
   final String color;
+  final String courseDay;
   Timetable(
       {@required this.tId,
-      @required this.gender,
       @required this.lastname,
       @required this.subjectAcronym,
       @required this.room,
       @required this.isCancelled,
       @required this.isCanged,
       @required this.massage,
-      @required this.color});
+      @required this.color,
+      @required this.courseDay});
   factory Timetable.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -237,8 +237,6 @@ class Timetable extends DataClass implements Insertable<Timetable> {
     final boolType = db.typeSystem.forDartType<bool>();
     return Timetable(
       tId: intType.mapFromDatabaseResponse(data['${effectivePrefix}t_id']),
-      gender:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}gender']),
       lastname: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}lastname']),
       subjectAcronym: stringType
@@ -252,13 +250,14 @@ class Timetable extends DataClass implements Insertable<Timetable> {
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}massage']),
       color:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}color']),
+      courseDay: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}course_day']),
     );
   }
   factory Timetable.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
     return Timetable(
       tId: serializer.fromJson<int>(json['tId']),
-      gender: serializer.fromJson<String>(json['gender']),
       lastname: serializer.fromJson<String>(json['lastname']),
       subjectAcronym: serializer.fromJson<String>(json['subjectAcronym']),
       room: serializer.fromJson<String>(json['room']),
@@ -266,6 +265,7 @@ class Timetable extends DataClass implements Insertable<Timetable> {
       isCanged: serializer.fromJson<bool>(json['isCanged']),
       massage: serializer.fromJson<String>(json['massage']),
       color: serializer.fromJson<String>(json['color']),
+      courseDay: serializer.fromJson<String>(json['courseDay']),
     );
   }
   @override
@@ -273,7 +273,6 @@ class Timetable extends DataClass implements Insertable<Timetable> {
       {ValueSerializer serializer = const ValueSerializer.defaults()}) {
     return {
       'tId': serializer.toJson<int>(tId),
-      'gender': serializer.toJson<String>(gender),
       'lastname': serializer.toJson<String>(lastname),
       'subjectAcronym': serializer.toJson<String>(subjectAcronym),
       'room': serializer.toJson<String>(room),
@@ -281,6 +280,7 @@ class Timetable extends DataClass implements Insertable<Timetable> {
       'isCanged': serializer.toJson<bool>(isCanged),
       'massage': serializer.toJson<String>(massage),
       'color': serializer.toJson<String>(color),
+      'courseDay': serializer.toJson<String>(courseDay),
     };
   }
 
@@ -288,8 +288,6 @@ class Timetable extends DataClass implements Insertable<Timetable> {
   TimetablesCompanion createCompanion(bool nullToAbsent) {
     return TimetablesCompanion(
       tId: tId == null && nullToAbsent ? const Value.absent() : Value(tId),
-      gender:
-          gender == null && nullToAbsent ? const Value.absent() : Value(gender),
       lastname: lastname == null && nullToAbsent
           ? const Value.absent()
           : Value(lastname),
@@ -308,22 +306,24 @@ class Timetable extends DataClass implements Insertable<Timetable> {
           : Value(massage),
       color:
           color == null && nullToAbsent ? const Value.absent() : Value(color),
+      courseDay: courseDay == null && nullToAbsent
+          ? const Value.absent()
+          : Value(courseDay),
     );
   }
 
   Timetable copyWith(
           {int tId,
-          String gender,
           String lastname,
           String subjectAcronym,
           String room,
           bool isCancelled,
           bool isCanged,
           String massage,
-          String color}) =>
+          String color,
+          String courseDay}) =>
       Timetable(
         tId: tId ?? this.tId,
-        gender: gender ?? this.gender,
         lastname: lastname ?? this.lastname,
         subjectAcronym: subjectAcronym ?? this.subjectAcronym,
         room: room ?? this.room,
@@ -331,19 +331,20 @@ class Timetable extends DataClass implements Insertable<Timetable> {
         isCanged: isCanged ?? this.isCanged,
         massage: massage ?? this.massage,
         color: color ?? this.color,
+        courseDay: courseDay ?? this.courseDay,
       );
   @override
   String toString() {
     return (StringBuffer('Timetable(')
           ..write('tId: $tId, ')
-          ..write('gender: $gender, ')
           ..write('lastname: $lastname, ')
           ..write('subjectAcronym: $subjectAcronym, ')
           ..write('room: $room, ')
           ..write('isCancelled: $isCancelled, ')
           ..write('isCanged: $isCanged, ')
           ..write('massage: $massage, ')
-          ..write('color: $color')
+          ..write('color: $color, ')
+          ..write('courseDay: $courseDay')
           ..write(')'))
         .toString();
   }
@@ -352,35 +353,34 @@ class Timetable extends DataClass implements Insertable<Timetable> {
   int get hashCode => $mrjf($mrjc(
       tId.hashCode,
       $mrjc(
-          gender.hashCode,
+          lastname.hashCode,
           $mrjc(
-              lastname.hashCode,
+              subjectAcronym.hashCode,
               $mrjc(
-                  subjectAcronym.hashCode,
+                  room.hashCode,
                   $mrjc(
-                      room.hashCode,
+                      isCancelled.hashCode,
                       $mrjc(
-                          isCancelled.hashCode,
-                          $mrjc(isCanged.hashCode,
-                              $mrjc(massage.hashCode, color.hashCode)))))))));
+                          isCanged.hashCode,
+                          $mrjc(massage.hashCode,
+                              $mrjc(color.hashCode, courseDay.hashCode)))))))));
   @override
   bool operator ==(other) =>
       identical(this, other) ||
       (other is Timetable &&
           other.tId == this.tId &&
-          other.gender == this.gender &&
           other.lastname == this.lastname &&
           other.subjectAcronym == this.subjectAcronym &&
           other.room == this.room &&
           other.isCancelled == this.isCancelled &&
           other.isCanged == this.isCanged &&
           other.massage == this.massage &&
-          other.color == this.color);
+          other.color == this.color &&
+          other.courseDay == this.courseDay);
 }
 
 class TimetablesCompanion extends UpdateCompanion<Timetable> {
   final Value<int> tId;
-  final Value<String> gender;
   final Value<String> lastname;
   final Value<String> subjectAcronym;
   final Value<String> room;
@@ -388,9 +388,9 @@ class TimetablesCompanion extends UpdateCompanion<Timetable> {
   final Value<bool> isCanged;
   final Value<String> massage;
   final Value<String> color;
+  final Value<String> courseDay;
   const TimetablesCompanion({
     this.tId = const Value.absent(),
-    this.gender = const Value.absent(),
     this.lastname = const Value.absent(),
     this.subjectAcronym = const Value.absent(),
     this.room = const Value.absent(),
@@ -398,10 +398,10 @@ class TimetablesCompanion extends UpdateCompanion<Timetable> {
     this.isCanged = const Value.absent(),
     this.massage = const Value.absent(),
     this.color = const Value.absent(),
+    this.courseDay = const Value.absent(),
   });
   TimetablesCompanion.insert({
     @required int tId,
-    @required String gender,
     @required String lastname,
     @required String subjectAcronym,
     @required String room,
@@ -409,26 +409,26 @@ class TimetablesCompanion extends UpdateCompanion<Timetable> {
     this.isCanged = const Value.absent(),
     @required String massage,
     @required String color,
+    @required String courseDay,
   })  : tId = Value(tId),
-        gender = Value(gender),
         lastname = Value(lastname),
         subjectAcronym = Value(subjectAcronym),
         room = Value(room),
         massage = Value(massage),
-        color = Value(color);
+        color = Value(color),
+        courseDay = Value(courseDay);
   TimetablesCompanion copyWith(
       {Value<int> tId,
-      Value<String> gender,
       Value<String> lastname,
       Value<String> subjectAcronym,
       Value<String> room,
       Value<bool> isCancelled,
       Value<bool> isCanged,
       Value<String> massage,
-      Value<String> color}) {
+      Value<String> color,
+      Value<String> courseDay}) {
     return TimetablesCompanion(
       tId: tId ?? this.tId,
-      gender: gender ?? this.gender,
       lastname: lastname ?? this.lastname,
       subjectAcronym: subjectAcronym ?? this.subjectAcronym,
       room: room ?? this.room,
@@ -436,6 +436,7 @@ class TimetablesCompanion extends UpdateCompanion<Timetable> {
       isCanged: isCanged ?? this.isCanged,
       massage: massage ?? this.massage,
       color: color ?? this.color,
+      courseDay: courseDay ?? this.courseDay,
     );
   }
 }
@@ -452,18 +453,6 @@ class $TimetablesTable extends Timetables
   GeneratedIntColumn _constructTId() {
     return GeneratedIntColumn(
       't_id',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _genderMeta = const VerificationMeta('gender');
-  GeneratedTextColumn _gender;
-  @override
-  GeneratedTextColumn get gender => _gender ??= _constructGender();
-  GeneratedTextColumn _constructGender() {
-    return GeneratedTextColumn(
-      'gender',
       $tableName,
       false,
     );
@@ -551,17 +540,29 @@ class $TimetablesTable extends Timetables
     );
   }
 
+  final VerificationMeta _courseDayMeta = const VerificationMeta('courseDay');
+  GeneratedTextColumn _courseDay;
+  @override
+  GeneratedTextColumn get courseDay => _courseDay ??= _constructCourseDay();
+  GeneratedTextColumn _constructCourseDay() {
+    return GeneratedTextColumn(
+      'course_day',
+      $tableName,
+      false,
+    );
+  }
+
   @override
   List<GeneratedColumn> get $columns => [
         tId,
-        gender,
         lastname,
         subjectAcronym,
         room,
         isCancelled,
         isCanged,
         massage,
-        color
+        color,
+        courseDay
       ];
   @override
   $TimetablesTable get asDslTable => this;
@@ -577,12 +578,6 @@ class $TimetablesTable extends Timetables
       context.handle(_tIdMeta, tId.isAcceptableValue(d.tId.value, _tIdMeta));
     } else if (tId.isRequired && isInserting) {
       context.missing(_tIdMeta);
-    }
-    if (d.gender.present) {
-      context.handle(
-          _genderMeta, gender.isAcceptableValue(d.gender.value, _genderMeta));
-    } else if (gender.isRequired && isInserting) {
-      context.missing(_genderMeta);
     }
     if (d.lastname.present) {
       context.handle(_lastnameMeta,
@@ -628,6 +623,12 @@ class $TimetablesTable extends Timetables
     } else if (color.isRequired && isInserting) {
       context.missing(_colorMeta);
     }
+    if (d.courseDay.present) {
+      context.handle(_courseDayMeta,
+          courseDay.isAcceptableValue(d.courseDay.value, _courseDayMeta));
+    } else if (courseDay.isRequired && isInserting) {
+      context.missing(_courseDayMeta);
+    }
     return context;
   }
 
@@ -644,9 +645,6 @@ class $TimetablesTable extends Timetables
     final map = <String, Variable>{};
     if (d.tId.present) {
       map['t_id'] = Variable<int, IntType>(d.tId.value);
-    }
-    if (d.gender.present) {
-      map['gender'] = Variable<String, StringType>(d.gender.value);
     }
     if (d.lastname.present) {
       map['lastname'] = Variable<String, StringType>(d.lastname.value);
@@ -669,6 +667,9 @@ class $TimetablesTable extends Timetables
     }
     if (d.color.present) {
       map['color'] = Variable<String, StringType>(d.color.value);
+    }
+    if (d.courseDay.present) {
+      map['course_day'] = Variable<String, StringType>(d.courseDay.value);
     }
     return map;
   }

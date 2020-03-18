@@ -177,7 +177,6 @@ class AuthProv with ChangeNotifier {
           id++;
           final timetable = TimetablesCompanion(
             tId: Value(id),
-            gender: Value('frei'),
             lastname: Value('frei'),
             subjectAcronym: Value('frei'),
             isCancelled: Value(true),
@@ -185,6 +184,7 @@ class AuthProv with ChangeNotifier {
             room: Value('frei'),
             massage: Value('frei'),
             color: Value('frei'),
+            courseDay: Value('frei'),
           );
           dbTimetable.insertTimetable(timetable);
         } else {
@@ -192,14 +192,14 @@ class AuthProv with ChangeNotifier {
           id++;
           final timetable = TimetablesCompanion(
             tId: Value(id),
-            gender: Value(list[1]),
             lastname: Value(list[2]),
             subjectAcronym: Value(list[3]),
             room: Value(list[4]),
             isCancelled: Value(list[5]),
             isCanged: Value(list[6]),
             massage: Value(list[7]),
-            color: Value(col)
+            color: Value(col),
+            courseDay: Value(list[9]),
           );
           dbTimetable.insertTimetable(timetable);
         }
