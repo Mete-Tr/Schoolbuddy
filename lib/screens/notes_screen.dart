@@ -92,7 +92,7 @@ class _NotesListState extends State<NotesList> {
                           builder: (ctx) => AlertDialog(
                             title: Text('Bist du sicher?'),
                             content: Text(
-                              'Willst du diese Notiz löschen?',
+                              'Willst du diese Notiz entgültig löschen?',
                             ),
                             actions: <Widget>[
                               FlatButton(
@@ -102,7 +102,7 @@ class _NotesListState extends State<NotesList> {
                                 },
                               ),
                               FlatButton(
-                                child: Text('Ja'),
+                                child: Text('Ja', style: TextStyle(color: Colors.red),),
                                 onPressed: () {
                                   Navigator.of(ctx).pop(true);
                                 },
