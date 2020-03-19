@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:x/provider/authProv.dart';
-import 'package:x/provider/profileProv.dart';
 import 'package:x/screens/change_email.dart';
 import 'package:x/screens/change_password.dart';
 
@@ -30,10 +30,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+  Future<SharedPreferences> getUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs;
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Provider.of<ProfileProv>(context).getUserData(),
+        future: getUserData(),
         builder: (context, snapshot) {
           if (snapshot?.hasData ?? false) {
             return Scaffold(

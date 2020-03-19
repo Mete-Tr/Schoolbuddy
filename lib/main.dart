@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:x/database/moor_database.dart';
-import 'package:x/provider/homeProv.dart';
 import 'package:x/provider/homeworkProv.dart';
-import 'package:x/provider/profileProv.dart';
 import 'package:x/screens/change_email.dart';
 import 'package:x/screens/change_password.dart';
 import 'package:x/screens/homework_screen.dart';
@@ -42,12 +40,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: AppDatabase().timetableDao,
-        ),
-        ChangeNotifierProvider.value(
-          value: ProfileProv(),
-        ),
-        ChangeNotifierProvider.value(
-          value: HomeProv(),
         ),
         ChangeNotifierProvider.value(
           value: HomeworkProv(),
