@@ -70,26 +70,43 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: StreamBuilder(
-                    stream: dao.watchTimetableDay('MO'
-                        // today == 1
-                        //   ? 'MO'
-                        //   : today == 2
-                        //       ? 'DI'
-                        //       : today == 3
-                        //           ? 'MIT'
-                        //           : today == 4
-                        //               ? 'Do'
-                        //               : today == 5 ? 'FRI' : 'MO'
-                        ),
+                    stream: dao.watchTimetableDay(today == 1
+                        ? 'MO'
+                        : today == 2
+                            ? 'DI'
+                            : today == 3
+                                ? 'MIT'
+                                : today == 4
+                                    ? 'DO'
+                                    : today == 5 ? 'FRI' : 'MO'),
                     builder:
                         (context, AsyncSnapshot<List<Timetable>> snapshot) {
                       final list = snapshot.data ?? List();
-                      print(list.length);
                       return ListView.builder(
                         itemCount: list.length,
                         itemBuilder: (ctx, i) {
                           return Card(
-                            child: Text(list[i].subjectAcronym)
+                            color: Color(int.parse(list[i].color)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            elevation: 8,
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              height: 80,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text('${i + 1}.',
+                                      style: TextStyle(fontSize: 26)),
+                                  Text('${list[i].subjectAcronym}',
+                                      style: TextStyle(fontSize: 30)),
+                                  Text('${list[i].room}',
+                                      style: TextStyle(fontSize: 26))
+                                ],
+                              ),
+                            ),
                           );
                         },
                       );

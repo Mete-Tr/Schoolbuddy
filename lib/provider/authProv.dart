@@ -184,7 +184,7 @@ class AuthProv with ChangeNotifier {
             isCanged: Value(false),
             room: Value('frei'),
             massage: Value('frei'),
-            color: Value('#888888'),
+            color: Value('0xff888888'),
             courseDay: Value(
               j == 0
                   ? 'MO'
